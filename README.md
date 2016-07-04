@@ -1,2 +1,2 @@
-# Cubed.io
-The official cubed.io repo
+# Squared.io
+The official squared.io repo
