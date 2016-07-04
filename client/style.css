@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono);
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
+#main{
+    text-align: center;
+}
+#main-title{
+    font-family: 'Share Tech Mono';
+    font-size: 48px;
+    padding-bottom: 15px;
+}
+body{
+    /*background-color: #FCFFFA;      TODO: Set colour here*/
+}
+#nickLabel{
+    font-family: 'Poiret One';
+    font-size: 25px;
+}
+#nick{
+    /*background-color: white;      TODO: Set colour here*/
+    border: 2px solid #BDBDBD;/*    TODO: Set new colour here*/
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 27px;
+    padding-left: 20px;
+    text-align: center;
+    font-family: 'VT323';
+    font-size:18px;
+}
+#submit{
+    font-family: 'Share Tech Mono';
+    font-size:25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    background-color: #FCFCFC; /* Set different color here -- This is just here so that we don't get
+                an ugly dark grey background.*/
+}
