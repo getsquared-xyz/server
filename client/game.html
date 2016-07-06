@@ -1,4 +1,4 @@
-<canvas id="ctx" width="100%" height="100%"></canvas>
+<canvas id="ctx" width="500" height="500" style="border:1px solid #000000;"></canvas>
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
@@ -6,6 +6,7 @@
     ctx.font = '30px Arial';
     var me={};
     var Boxs;
+    var gamesize=1000;
     qs = (function(a) {
     if (a == "") return {};
     var b = {};
@@ -20,6 +21,7 @@
     return b;
   })(window.location.search.substr(1).split('&'));
     var socket = io();
+    
     socket.emit('name',qs["name"]);
     socket.on('newPositions',function(data){
       var me={};
@@ -32,10 +34,16 @@
       }
 
         ctx.clearRect(0,0,500,500);
+        ctx.fillStyle="black";
+        ctx.fillRect(0,0-me.yoff,gamesize,1);
+        ctx.fillRect(0-me.xoff,0,1,gamesize);
+        ctx.fillRect(gamesize+20-me.xoff,0,1,gamesize);
+        ctx.fillRect(0,gamesize+20-me.yoff,gamesize,1);
         ctx.fillStyle="#FF0000";
         for(var i = 0 ; i < Boxes.length; i++) {
           ctx.fillRect(Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,20,20);
         }
+
         for(var i = 0 ; i < data.length; i++) {
           ctx.fillStyle="black";
           if(info[i].name == qs["name"]) {
