@@ -1,5 +1,5 @@
 # Squared.io
-The official squared.io repo
+The official squared.io server stuff repo
 #TODO
 - [x] Add scrolling *DO FIRST*
 - [ ] Add ability to place cubes
