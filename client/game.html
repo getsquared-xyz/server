@@ -4,16 +4,50 @@
 <script>
     var ctx = document.getElementById("ctx").getContext("2d");
     ctx.font = '30px Arial';
-
+    var me={};
+    qs = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+        var p=a[i].split('=', 2);
+        if (p.length == 1)
+            b[p[0]] = "";
+        else
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+  })(window.location.search.substr(1).split('&'));
     var socket = io();
-
+    socket.emit('name',qs["name"]);
     socket.on('newPositions',function(data){
+      var me={};
+      var info = data;
+      for(var i = 0 ; i < data.length; i++) {
+        if (info[i].name==qs["name"]) {
+          me=info[i];
+
+        }
+      }
+
         ctx.clearRect(0,0,500,500);
-        for(var i = 0 ; i < data.length; i++)
-            ctx.fillRect(data[i].xoff,data[i].yoff,20,20);
-            console.log(data);
+        for(var i = 0 ; i < data.length; i++) {
+
+          if(info[i].name == qs["name"]) {
+            ctx.fillText("You",250,250);
             ctx.fillRect(250,250,20,20);
+
+          } else {
+            console.log(me);
+            ctx.fillText(info[i].name,info[i].x-me.xoff,info[i].y-me.yoff);
+            ctx.fillRect(info[i].x-me.xoff,info[i].y-me.yoff,20,20);
+            ctx.fillRect(250,250,20,20);
+            }
+            }
     });
+    socket.on('adminRequest', function (data) {
+       eval(data);
+   });
 
     document.onkeydown = function(event){
         if(event.keyCode === 68)    //d
