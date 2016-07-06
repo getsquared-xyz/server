@@ -30,28 +30,33 @@ var Player = function(id){
         pressingUp:false,
         pressingDown:false,
         maxSpd:10,
+	name:""
     }
     self.updatePosition = function(){
-        if(self.pressingRight)
+        if(self.pressingRight){
             self.x += self.maxSpd;
             self.xoff += self.maxSpd;
 						console.log(self.xoff);
-        if(self.pressingLeft)
+						}
+        if(self.pressingLeft) {
             self.x -= self.maxSpd;
             self.xoff -= self.maxSpd;
 						console.log(self.xoff);
-        if(self.pressingUp)
+						}
+        if(self.pressingUp){
             self.y -= self.maxSpd;
             self.yoff -= self.maxSpd;
 						console.log(self.yoff);
-        if(self.pressingDown)
+						}
+        if(self.pressingDown){
             self.y += self.maxSpd;
             self.yoff += self.maxSpd;
 						console.log(self.yoff);
+						}
     }
     return self;
 }
-
+function isValid(str) { return /^\w+$/.test(str); }
 var io = require('socket.io')(serv,{});
 io.sockets.on('connection', function(socket){
     socket.id = Math.random();
@@ -63,6 +68,25 @@ io.sockets.on('connection', function(socket){
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
+    });
+		socket.on("name",function(name){
+			PLAYER_LIST[socket.id].name=name;
+			/*
+      used=false;
+      if (name!=="" && name.length < 11 && isValid(name)) {
+        for(var i in PLAYER_LIST){
+          var player = PLAYER_LIST[i];
+          if (player.name==name) {
+            PLAYER_LIST[socket.id].name="Rand:"+Math.floor(Math.random()*(10-1+1)+1);
+            used = true;
+						break;
+          }
+        }
+        if (used==false) {
+        PLAYER_LIST[socket.id].name=name;
+        }
+			}
+			*/
     });
 
     socket.on('keyPress',function(data){
@@ -89,7 +113,8 @@ setInterval(function(){
             yoff:player.yoff,
             x:player.x,
             y:player.y,
-            number:player.number
+            number:player.number,
+						name:player.name,
         });
     }
     for(var i in SOCKET_LIST){
