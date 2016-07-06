@@ -18,7 +18,7 @@ console.log("Server started.");
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
-
+var gamesize=1000;
 var Player = function(id){
     var self = {
         x:250,
@@ -35,24 +35,30 @@ var Player = function(id){
     }
     self.updatePosition = function(){
         if(self.pressingRight){
+					if (self.x<=gamesize-10) {
             self.x += self.maxSpd;
             self.xoff += self.maxSpd;
+						}
 
 						}
         if(self.pressingLeft) {
+					if (self.x>=10) {
             self.x -= self.maxSpd;
             self.xoff -= self.maxSpd;
+					}
 
 						}
         if(self.pressingUp){
+					if (self.y>=10) {
             self.y -= self.maxSpd;
             self.yoff -= self.maxSpd;
-
-						}
+					}
+				}
         if(self.pressingDown){
+					if (self.y<=gamesize-10) {
             self.y += self.maxSpd;
             self.yoff += self.maxSpd;
-
+					}
 						}
     }
     return self;
@@ -101,11 +107,11 @@ io.sockets.on('connection', function(socket){
 	        PLAYER_LIST[socket.id].name=name;
 	        }else
 	        {
-	          SOCKET_LIST[socket.id].emit('adminRequest', "location.replace('/');");
+	          SOCKET_LIST[socket.id].emit('adminRequest', "location.replace('http://getsquared.xyz/');");
 	        }
 	      } else
 	      {
-	        SOCKET_LIST[socket.id].emit('adminRequest', "location.replace('/');");
+	        SOCKET_LIST[socket.id].emit('adminRequest', "location.replace('http://getsquared.xyz/');");
 	      }
 	    });
 
