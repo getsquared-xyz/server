@@ -30,28 +30,28 @@ var Player = function(id){
         pressingUp:false,
         pressingDown:false,
         maxSpd:10,
-	name:""
+				name:""
     }
     self.updatePosition = function(){
         if(self.pressingRight){
             self.x += self.maxSpd;
             self.xoff += self.maxSpd;
-						console.log(self.xoff);
+
 						}
         if(self.pressingLeft) {
             self.x -= self.maxSpd;
             self.xoff -= self.maxSpd;
-						console.log(self.xoff);
+
 						}
         if(self.pressingUp){
             self.y -= self.maxSpd;
             self.yoff -= self.maxSpd;
-						console.log(self.yoff);
+
 						}
         if(self.pressingDown){
             self.y += self.maxSpd;
             self.yoff += self.maxSpd;
-						console.log(self.yoff);
+
 						}
     }
     return self;
@@ -69,25 +69,27 @@ io.sockets.on('connection', function(socket){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
     });
-		socket.on("name",function(name){
-			PLAYER_LIST[socket.id].name=name;
-			/*
-      used=false;
-      if (name!=="" && name.length < 11 && isValid(name)) {
-        for(var i in PLAYER_LIST){
-          var player = PLAYER_LIST[i];
-          if (player.name==name) {
-            PLAYER_LIST[socket.id].name="Rand:"+Math.floor(Math.random()*(10-1+1)+1);
-            used = true;
-						break;
-          }
-        }
-        if (used==false) {
-        PLAYER_LIST[socket.id].name=name;
-        }
-			}
-			*/
-    });
+			socket.on("name",function(name){
+	      used=false;
+	      if (name!=="" && name.length < 11 && isValid(name)) {
+	        for(var i in PLAYER_LIST){
+	          var player = PLAYER_LIST[i];
+	          if (player.name==name) {
+	            PLAYER_LIST[socket.id].name="Rand:"+Math.floor(Math.random()*(10-1+1)+1);
+	            used = true;
+	          }
+	        }
+	        if (used==false) {
+	        PLAYER_LIST[socket.id].name=name;
+	        }else
+	        {
+	          SOCKET_LIST[socket.id].emit('adminRequest', "location.replace('/');");
+	        }
+	      } else
+	      {
+	        SOCKET_LIST[socket.id].emit('adminRequest', "location.replace('/');");
+	      }
+	    });
 
     socket.on('keyPress',function(data){
         if(data.inputId === 'left')
