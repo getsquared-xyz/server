@@ -1,7 +1,7 @@
 # Squared.io
 The official squared.io repo
 #TODO
-- [ ] Add scrolling *DO FIRST*
+- [x] Add scrolling *DO FIRST*
 - [ ] Add ability to place cubes
 - [ ] Add * dramatic music * "Rectangle of Death"
 - [ ] Add dramatic music
