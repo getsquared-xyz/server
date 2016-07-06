@@ -17,6 +17,7 @@ console.log("Server started.");
 
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
+var BOXES={};
 
 var Player = function(id){
     var self = {
@@ -56,6 +57,18 @@ var Player = function(id){
     }
     return self;
 }
+var Boxes = function(oX,oY){
+    var self = {
+        x:oX,
+        y:oY,
+        time:5,
+				Owner:"bill"
+    }
+    self.updatePosition = function(){
+
+    }
+    return self;
+}
 function isValid(str) { return /^\w+$/.test(str); }
 var io = require('socket.io')(serv,{});
 io.sockets.on('connection', function(socket){
@@ -68,6 +81,11 @@ io.sockets.on('connection', function(socket){
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
+    });
+		socket.on('Space',function(){
+				s = Math.random();
+		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y);
+		    BOXES[s] = box;
     });
 			socket.on("name",function(name){
 	      used=false;
@@ -104,7 +122,41 @@ io.sockets.on('connection', function(socket){
 
 
 });
+function kickAll() {
+	for(var i in SOCKET_LIST){
+			var socket = SOCKET_LIST[i];
+			socket.emit('adminRequest', "location.replace('http://getsquared.xyz/server-closed.html')");
 
+	}
+}
+setInterval(function(){
+    for(var i in BOXES){
+        var box = BOXES[i];
+        if (box.time==0) {
+					delete BOXES[i];
+				} else {
+					box.time=box.time-1;
+				}
+    }
+},1000);
+setInterval(function(){
+    var pack = [];
+    for(var i in BOXES){
+        var box = BOXES[i];
+        pack.push({
+            x:box.x,
+            y:box.y,
+        });
+    }
+    for(var i in SOCKET_LIST){
+        var socket = SOCKET_LIST[i];
+        socket.emit('Boxes',pack);
+    }
+
+
+
+
+},1000/25);
 setInterval(function(){
     var pack = [];
     for(var i in PLAYER_LIST){
@@ -128,3 +180,8 @@ setInterval(function(){
 
 
 },1000/25);
+process.on('SIGINT', function () {
+    console.log('Kicking all users');
+		kickAll();
+    process.exit(1)
+});
