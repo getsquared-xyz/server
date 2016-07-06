@@ -21,7 +21,16 @@
     return b;
   })(window.location.search.substr(1).split('&'));
     var socket = io();
-    
+    var imgs={};
+    imgs.You=new Image();
+    imgs.You.src = "./client/SquaredGraphics/YourPlayer.png";
+    imgs.Other=new Image();
+    imgs.Other.src = "./client/SquaredGraphics/OtherPlayers.png";
+    imgs.YourDrop=new Image();
+    imgs.YourDrop.src = "./client/SquaredGraphics/YourDrops.png";
+    imgs.OtherDrops=new Image();
+    imgs.OtherDrops.src = "./client/SquaredGraphics/OtherDrops.png";
+
     socket.emit('name',qs["name"]);
     socket.on('newPositions',function(data){
       var me={};
@@ -41,19 +50,23 @@
         ctx.fillRect(0,gamesize+20-me.yoff,gamesize,1);
         ctx.fillStyle="#FF0000";
         for(var i = 0 ; i < Boxes.length; i++) {
-          ctx.fillRect(Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,20,20);
+          if(Boxes[i].owner == qs["name"]) {
+          ctx.drawImage(imgs.YourDrop,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+        } else {
+          ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+        }
         }
 
         for(var i = 0 ; i < data.length; i++) {
           ctx.fillStyle="black";
           if(info[i].name == qs["name"]) {
             ctx.fillText("You",250,250);
-            ctx.fillRect(250,250,20,20);
+            ctx.drawImage(imgs.You, 250, 250,20,20);
+
 
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff,info[i].y-me.yoff);
-            ctx.fillRect(info[i].x-me.xoff,info[i].y-me.yoff,20,20);
-            ctx.fillRect(250,250,20,20);
+            ctx.drawImage(imgs.Other,info[i].x-me.xoff,info[i].y-me.yoff,20,20);
             }
         }
 
