@@ -31,7 +31,8 @@ var Player = function(id){
         pressingUp:false,
         pressingDown:false,
         maxSpd:10,
-				name:""
+				name:"",
+				boxCount:0
     }
     self.updatePosition = function(){
         if(self.pressingRight){
@@ -63,12 +64,12 @@ var Player = function(id){
     }
     return self;
 }
-var Boxes = function(oX,oY){
+var Boxes = function(oX,oY, owner){
     var self = {
         x:oX,
         y:oY,
         time:5,
-				Owner:"bill"
+				Owner:owner
     }
     self.updatePosition = function(){
 
@@ -89,9 +90,12 @@ io.sockets.on('connection', function(socket){
         delete PLAYER_LIST[socket.id];
     });
 		socket.on('Space',function(){
+			if (PLAYER_LIST[socket.id].boxCount<4) {
 				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y);
+		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name);
 		    BOXES[s] = box;
+				PLAYER_LIST[socket.id].boxCount++;
+				}
     });
 			socket.on("name",function(name){
 	      used=false;
@@ -135,11 +139,26 @@ function kickAll() {
 
 	}
 }
+function findID(username) {
+  for(var i in PLAYER_LIST){
+    if (PLAYER_LIST[i].name==username) {
+      return PLAYER_LIST[i].id;
+    }
+  }
+}
 setInterval(function(){
     for(var i in BOXES){
         var box = BOXES[i];
         if (box.time==0) {
 					delete BOXES[i];
+					try {
+						var player = PLAYER_LIST[findID(box.Owner)];
+						player.boxCount--;
+					}
+					catch(err) {
+    				console.log("Player Left Before Box Removed")
+					}					
+
 				} else {
 					box.time=box.time-1;
 				}
@@ -152,6 +171,7 @@ setInterval(function(){
         pack.push({
             x:box.x,
             y:box.y,
+						owner:box.Owner
         });
     }
     for(var i in SOCKET_LIST){
