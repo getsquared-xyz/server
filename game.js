@@ -157,7 +157,7 @@ setInterval(function(){
 					}
 					catch(err) {
     				console.log("Player Left Before Box Removed")
-					}					
+					}
 
 				} else {
 					box.time=box.time-1;
@@ -165,25 +165,19 @@ setInterval(function(){
     }
 },1000);
 setInterval(function(){
-    var pack = [];
-    for(var i in BOXES){
-        var box = BOXES[i];
-        pack.push({
-            x:box.x,
-            y:box.y,
-						owner:box.Owner
-        });
-    }
-    for(var i in SOCKET_LIST){
-        var socket = SOCKET_LIST[i];
-        socket.emit('Boxes',pack);
-    }
-
-
-
-
-},1000/25);
-setInterval(function(){
+	var pack = [];
+	for(var i in BOXES){
+			var box = BOXES[i];
+			pack.push({
+					x:box.x,
+					y:box.y,
+					owner:box.Owner
+			});
+	}
+	for(var i in SOCKET_LIST){
+			var socket = SOCKET_LIST[i];
+			socket.emit('Boxes',pack);
+	}
     var pack = [];
     for(var i in PLAYER_LIST){
         var player = PLAYER_LIST[i];
