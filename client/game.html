@@ -44,10 +44,24 @@
 
         ctx.clearRect(0,0,500,500);
         ctx.fillStyle="black";
-        ctx.fillRect(0,0-me.yoff,gamesize,1);
-        ctx.fillRect(0-me.xoff,0,1,gamesize);
-        ctx.fillRect(gamesize+20-me.xoff,0,1,gamesize);
-        ctx.fillRect(0,gamesize+20-me.yoff,gamesize,1);
+        ctx.fillRect(0,0-me.yoff,gamesize,5);
+        ctx.fillRect(0-me.xoff,0,5,gamesize);
+        ctx.fillRect(gamesize+20-me.xoff,0,5,gamesize);
+        ctx.fillRect(0,gamesize+20-me.yoff,gamesize,5);
+        /*
+        Grid stuffs
+        */
+        ctx.fillStyle="grey";
+        /*x stuffs
+        */
+        for(var i = 0 ; i < 1001; i = i + 40) {
+        ctx.fillRect(i-me.xoff,0,1,gamesize);
+      }
+        /*y stuffs
+        */
+        for(var i = 0 ; i < 1001; i = i + 40) {
+        ctx.fillRect(0,i-me.yoff,gamesize,1);
+      }
         ctx.fillStyle="#FF0000";
         for(var i = 0 ; i < Boxes.length; i++) {
           if(Boxes[i].owner == qs["name"]) {
