@@ -2,7 +2,9 @@
 The official squared.io server stuff repo
 #TODO
 - [x] Add scrolling *DO FIRST*
-- [ ] Add ability to place cubes
+- [x] Add ability to place cubes
+- [ ] Add background grid
+- [ ] Add fullscreen
 - [ ] Add * dramatic music * "Rectangle of Death"
 - [ ] Add dramatic music
 - [ ] Add points and leaderboard (Not that anyone will ever get on it)
