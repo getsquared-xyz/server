@@ -68,12 +68,12 @@
         for(var i = 0 ; i < Boxes.length; i++) {
           if(Boxes[i].owner == qs["name"]) {
             if (Boxes[i].type=="1") {
-          ctx.drawImage(imgs.YourDrop1,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+          ctx.drawImage(imgs.YourDrop1,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
         } else if (Boxes[i].type=="2") {
-          ctx.drawImage(imgs.YourDrop2,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+          ctx.drawImage(imgs.YourDrop2,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
         }
         } else {
-          ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+          ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
         }
         }
 
@@ -81,12 +81,12 @@
           ctx.fillStyle="black";
           if(info[i].name == qs["name"]) {
             ctx.fillText("You",250,250);
-            ctx.drawImage(imgs.You, 250, 250,20,20);
+            ctx.drawImage(imgs.You, 250, 250,35,35);
 
 
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff,info[i].y-me.yoff);
-            ctx.drawImage(imgs.Other,info[i].x-me.xoff,info[i].y-me.yoff,20,20);
+            ctx.drawImage(imgs.Other,info[i].x-me.xoff,info[i].y-me.yoff,35,35);
             }
         }
 
