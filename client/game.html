@@ -3,6 +3,7 @@
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
     //var ctx = document.getElementById("ctx").getContext("2d");
+    var socket = io();
     var me={};
     var Boxs;
     var gamesize=2000;
@@ -20,7 +21,6 @@
     }
     return b;
     })(window.location.search.substr(1).split('&'));
-    var socket = io();
     var imgs={};
     imgs.You=new Image();
     imgs.You.src = "./client/SquaredGraphics/YourPlayer.png";
@@ -57,20 +57,19 @@
             for(var i = 0 ; i < data.length; i++) {
               if (info[i].name==qs["name"]) {
                 me=info[i];
-
               }
             }
 
-              ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+              ctx.clearRect(0,0,10000,10000);
               ctx.fillStyle="black";
               //North Border
-              ctx.fillRect(0,0-me.yoff,gamesize,5);
+              ctx.fillRect(0,0-me.yoff+window.innerHeight/7,gamesize,5);
               //West Border
-              ctx.fillRect(0-me.xoff,0,5,gamesize);
+              ctx.fillRect(0-me.xoff+window.innerWidth/3.18,0,5,gamesize);
               //East Border
-              ctx.fillRect(gamesize2+20-me.xoff,0,5,gamesize2);
+              ctx.fillRect(gamesize2+20-me.xoff+window.innerWidth/3.18,0,5,gamesize2);
               //South Border
-              ctx.fillRect(0,gamesize2+20-me.yoff,gamesize,5);
+              ctx.fillRect(0,gamesize2+20-me.yoff+window.innerHeight/7,gamesize,5);
               /*
               Grid stuffs
               */
@@ -78,12 +77,12 @@
               /*x stuffs
               */
               for(var i = 0 ; i < 1001; i = i + 39.3) {
-              ctx.fillRect(i-me.xoff,0,1,gamesize2);
+              ctx.fillRect(i-me.xoff+window.innerHeight/1.5,0,1,gamesize2);
             }
               /*y stuffs
               */
               for(var i = 0 ; i < 1001; i = i + 39.3) {
-              ctx.fillRect(0,i-me.yoff,gamesize,1);
+              ctx.fillRect(0,i-me.yoff+window.innerWidth/9.5,gamesize,1);
             }
             /*
               for(var i = 0 ; rod = true; i++) {
