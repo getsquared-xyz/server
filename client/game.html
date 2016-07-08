@@ -5,6 +5,7 @@
     var ctx = document.getElementById("ctx").getContext("2d");
     ctx.font = '30px Arial';
     var me={};
+    var info;
     var Boxs;
     var gamesize=1000;
     qs = (function(a) {
@@ -36,7 +37,7 @@
     socket.emit('name',qs["name"]);
     socket.on('newPositions',function(data){
       var me={};
-      var info = data;
+      info = data;
       for(var i = 0 ; i < data.length; i++) {
         if (info[i].name==qs["name"]) {
           me=info[i];
@@ -64,18 +65,40 @@
         for(var i = 0 ; i < 1001; i = i + 39.3) {
         ctx.fillRect(0,i-me.yoff,gamesize,1);
       }
-        ctx.fillStyle="#FF0000";
-        for(var i = 0 ; i < Boxes.length; i++) {
-          if(Boxes[i].owner == qs["name"]) {
-            if (Boxes[i].type=="1") {
-          ctx.drawImage(imgs.YourDrop1,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
-        } else if (Boxes[i].type=="2") {
-          ctx.drawImage(imgs.YourDrop2,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
+      ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+      ctx.strokeStyle="black";
+      for(var i = 0 ; i < Boxes.length; i++) {
+        if(Boxes[i].owner == qs["name"]) {
+          if (Boxes[i].type=="1") {
+        ctx.drawImage(imgs.YourDrop1,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
+      } else if (Boxes[i].type=="2") {
+        ctx.drawImage(imgs.YourDrop2,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
+      }
+      } else {
+        ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
+      }
+      }
+
+      for(var i in info){
+        var b = [];
+        var player=info[i];
+        try {
+          for(var i = 0; i < Boxes.length; i++) {
+            if (Boxes[i].id == player.id+1) {
+              b.push({
+                  id: Boxes[i].id,
+                  x: Boxes[i].x,
+                  y: Boxes[i].y,
+              });
+
+            }
+          }
+          ctx.fillRect(b[0].x-me.xoff,b[1].y-me.yoff,b[1].x-b[0].x+15,b[0].y-b[1].y+15);
         }
-        } else {
-          ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
+        catch(err) {
         }
-        }
+
+      }
 
         for(var i = 0 ; i < data.length; i++) {
           ctx.fillStyle="black";
