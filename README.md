@@ -10,3 +10,4 @@ The official squared.io server stuff repo
 - [ ] Add start invincibilty
 - [ ] Add points and leaderboard (Not that anyone will ever get on it)
 - [ ] One page design with server transfer multiple rooms and *moar*
+- [ ] Add Ads
