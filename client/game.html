@@ -1,12 +1,12 @@
-<canvas id="ctx" width="500" height="500" style="border:1px solid #000000;"></canvas>
+<canvas id="canvas" style="border:1px solid #000000;"></canvas>
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
-    var ctx = document.getElementById("ctx").getContext("2d");
-    ctx.font = '30px Arial';
+    //var ctx = document.getElementById("ctx").getContext("2d");
     var me={};
     var Boxs;
-    var gamesize=1000;
+    var gamesize=2000;
+    var gamesize2=1000;
     qs = (function(a) {
     if (a == "") return {};
     var b = {};
@@ -19,7 +19,7 @@
             b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
     }
     return b;
-  })(window.location.search.substr(1).split('&'));
+    })(window.location.search.substr(1).split('&'));
     var socket = io();
     var imgs={};
     imgs.You=new Image();
@@ -32,91 +32,136 @@
     imgs.OtherDrops.src = "./client/SquaredGraphics/OtherDrops.png";
 
     socket.emit('name',qs["name"]);
-    socket.on('newPositions',function(data){
-      var me={};
-      var info = data;
-      for(var i = 0 ; i < data.length; i++) {
-        if (info[i].name==qs["name"]) {
-          me=info[i];
+    (function() {
+        var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d');
+        // resize the canvas to fill browser window dynamically
+        window.addEventListener('resize', resizeCanvas, false);
 
+        function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                /**
+                 * Your drawings need to be inside this function otherwise they will be reset when
+                 * you resize the browser window and the canvas goes will be cleared.
+                 */
+                drawStuff();
         }
-      }
+        resizeCanvas();
 
-        ctx.clearRect(0,0,500,500);
-        ctx.fillStyle="black";
-        ctx.fillRect(0,0-me.yoff,gamesize,5);
-        ctx.fillRect(0-me.xoff,0,5,gamesize);
-        ctx.fillRect(gamesize+20-me.xoff,0,5,gamesize);
-        ctx.fillRect(0,gamesize+20-me.yoff,gamesize,5);
-        /*
-        Grid stuffs
-        */
-        ctx.fillStyle="grey";
-        /*x stuffs
-        */
-        for(var i = 0 ; i < 1001; i = i + 40) {
-        ctx.fillRect(i-me.xoff,0,1,gamesize);
-      }
-        /*y stuffs
-        */
-        for(var i = 0 ; i < 1001; i = i + 40) {
-        ctx.fillRect(0,i-me.yoff,gamesize,1);
-      }
-        ctx.fillStyle="#FF0000";
-        for(var i = 0 ; i < Boxes.length; i++) {
-          if(Boxes[i].owner == qs["name"]) {
-          ctx.drawImage(imgs.YourDrop,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
-        } else {
-          ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
-        }
-        }
+        function drawStuff() {
+          socket.on('newPositions',function(data){
+            var me={};
+            var info = data;
+            for(var i = 0 ; i < data.length; i++) {
+              if (info[i].name==qs["name"]) {
+                me=info[i];
 
-        for(var i = 0 ; i < data.length; i++) {
-          ctx.fillStyle="black";
-          if(info[i].name == qs["name"]) {
-            ctx.fillText("You",250,250);
-            ctx.drawImage(imgs.You, 250, 250,20,20);
-
-
-          } else {
-            ctx.fillText(info[i].name,info[i].x-me.xoff,info[i].y-me.yoff);
-            ctx.drawImage(imgs.Other,info[i].x-me.xoff,info[i].y-me.yoff,20,20);
+              }
             }
+
+              ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+              ctx.fillStyle="black";
+              //North Border
+              ctx.fillRect(0,0-me.yoff,gamesize,5);
+              //West Border
+              ctx.fillRect(0-me.xoff,0,5,gamesize);
+              //East Border
+              ctx.fillRect(gamesize2+20-me.xoff,0,5,gamesize2);
+              //South Border
+              ctx.fillRect(0,gamesize2+20-me.yoff,gamesize,5);
+              /*
+              Grid stuffs
+              */
+              ctx.fillStyle="grey";
+              /*x stuffs
+              */
+              for(var i = 0 ; i < 1001; i = i + 39.3) {
+              ctx.fillRect(i-me.xoff,0,1,gamesize2);
+            }
+              /*y stuffs
+              */
+              for(var i = 0 ; i < 1001; i = i + 39.3) {
+              ctx.fillRect(0,i-me.yoff,gamesize,1);
+            }
+            /*
+              for(var i = 0 ; rod = true; i++) {
+                ctx.beginPath();
+                for(var t = 0; t < 5; t++){
+                  x = Boxes[t].x-me.xoff;
+                  y = Boxes[t].y-me.yoff;
+                  ctx.moveTo(x,y);
+                }
+                context.closePath();
+                context.lineWidth = 5;
+                context.fillStyle = '#8ED6FF';
+                context.fill();
+                context.strokeStyle = 'blue';
+                context.stroke();
+              }
+              */
+              ctx.fillStyle="#FF0000";
+              b = 0
+              for(var i = 0 ; i < Boxes.length; i++) {
+                boxy = Boxes[i]
+                if(Boxes[i].owner == qs["name"]) {
+                ctx.drawImage(imgs.YourDrop,boxy.x-me.xoff,boxy.y-me.yoff,10,10);
+              } else {
+                ctx.drawImage(imgs.OtherDrops,boxy.x-me.xoff,boxy.y-me.yoff,10,10);
+              }
+            }
+              for(var i = 0 ; i < data.length; i++) {
+                ctx.fillStyle="black";
+                if(info[i].name == qs["name"]) {
+                  ctx.textAlign = 'center';
+                  ctx.fillStyle="black";
+                  ctx.font = '30px Arial';
+                  ctx.fillText("You",window.innerWidth/2,window.innerHeight/2);
+                  ctx.drawImage(imgs.You,window.innerWidth/2,window.innerHeight/2,20,20);
+                } else {
+                  ctx.fillText(info[i].name,info[i].x-me.xoff,info[i].y-me.yoff);
+                  ctx.drawImage(imgs.Other,info[i].x-me.xoff,info[i].y-me.yoff,20,20);
+                  }
+              }
+          });
+          socket.on('adminRequest', function (data) {
+             eval(data);
+          });
+          socket.on('Boxes',function(data){
+           Boxes = data;
+          });
+          socket.on('rectofDEATH',function(data){
+           rod = data;
+          });
+          socket.on('adminRequest', function (data) {
+            eval(data);
+          });
+          document.onkeydown = function(event){
+              if(event.keyCode === 68)    //d
+                  socket.emit('keyPress',{inputId:'right',state:true});
+              else if(event.keyCode === 83)   //s
+                  socket.emit('keyPress',{inputId:'down',state:true});
+              else if(event.keyCode === 65) //a
+                  socket.emit('keyPress',{inputId:'left',state:true});
+              else if(event.keyCode === 87) // w
+                  socket.emit('keyPress',{inputId:'up',state:true});
+              else if(event.keyCode === 32) // w
+                  socket.emit('Space',"Clicked");
+
+          }
+          document.onkeyup = function(event){
+              if(event.keyCode === 68)    //d
+                  socket.emit('keyPress',{inputId:'right',state:false});
+              else if(event.keyCode === 83)   //s
+                  socket.emit('keyPress',{inputId:'down',state:false});
+              else if(event.keyCode === 65) //a
+                  socket.emit('keyPress',{inputId:'left',state:false});
+              else if(event.keyCode === 87) // w
+                  socket.emit('keyPress',{inputId:'up',state:false});
+          }
+
         }
 
-    });
-    socket.on('adminRequest', function (data) {
-       eval(data);
-   });
-   socket.on('Boxes',function(data){
-     Boxes = data;
-
-   });
-   socket.on('adminRequest', function (data) {
-      eval(data);
-  });
-    document.onkeydown = function(event){
-        if(event.keyCode === 68)    //d
-            socket.emit('keyPress',{inputId:'right',state:true});
-        else if(event.keyCode === 83)   //s
-            socket.emit('keyPress',{inputId:'down',state:true});
-        else if(event.keyCode === 65) //a
-            socket.emit('keyPress',{inputId:'left',state:true});
-        else if(event.keyCode === 87) // w
-            socket.emit('keyPress',{inputId:'up',state:true});
-        else if(event.keyCode === 32) // w
-            socket.emit('Space',"Clicked");
-
-    }
-    document.onkeyup = function(event){
-        if(event.keyCode === 68)    //d
-            socket.emit('keyPress',{inputId:'right',state:false});
-        else if(event.keyCode === 83)   //s
-            socket.emit('keyPress',{inputId:'down',state:false});
-        else if(event.keyCode === 65) //a
-            socket.emit('keyPress',{inputId:'left',state:false});
-        else if(event.keyCode === 87) // w
-            socket.emit('keyPress',{inputId:'up',state:false});
-    }
-
+    })();
 </script>
