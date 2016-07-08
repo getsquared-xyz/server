@@ -32,7 +32,8 @@ var Player = function(id){
         pressingDown:false,
         maxSpd:10,
 				name:"",
-				boxCount:0
+				box1Count:0,
+				box2Count:0
     }
     self.updatePosition = function(){
         if(self.pressingRight){
@@ -64,12 +65,13 @@ var Player = function(id){
     }
     return self;
 }
-var Boxes = function(oX,oY, owner){
+var Boxes = function(oX,oY, owner,type){
     var self = {
         x:oX,
         y:oY,
         time:5,
-				Owner:owner
+				Owner:owner,
+				Type:type
     }
     self.updatePosition = function(){
 
@@ -90,11 +92,19 @@ io.sockets.on('connection', function(socket){
         delete PLAYER_LIST[socket.id];
     });
 		socket.on('Space',function(){
-			if (PLAYER_LIST[socket.id].boxCount<4) {
+			if (PLAYER_LIST[socket.id].box1Count<2) {
 				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name);
+		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"1");
 		    BOXES[s] = box;
-				PLAYER_LIST[socket.id].boxCount++;
+				PLAYER_LIST[socket.id].box1Count++;
+				}
+    });
+		socket.on('B',function(){
+			if (PLAYER_LIST[socket.id].box2Count<2) {
+				s = Math.random();
+		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"2");
+		    BOXES[s] = box;
+				PLAYER_LIST[socket.id].box2Count++;
 				}
     });
 			socket.on("name",function(name){
@@ -153,11 +163,15 @@ setInterval(function(){
 					delete BOXES[i];
 					try {
 						var player = PLAYER_LIST[findID(box.Owner)];
-						player.boxCount--;
+						if (box.Type=="1") {
+						player.box1Count--;
+					} else {
+						player.box2Count--;
+					}
 					}
 					catch(err) {
     				console.log("Player Left Before Box Removed")
-					}					
+					}
 
 				} else {
 					box.time=box.time-1;
@@ -165,25 +179,20 @@ setInterval(function(){
     }
 },1000);
 setInterval(function(){
-    var pack = [];
-    for(var i in BOXES){
-        var box = BOXES[i];
-        pack.push({
-            x:box.x,
-            y:box.y,
-						owner:box.Owner
-        });
-    }
-    for(var i in SOCKET_LIST){
-        var socket = SOCKET_LIST[i];
-        socket.emit('Boxes',pack);
-    }
-
-
-
-
-},1000/25);
-setInterval(function(){
+	var pack = [];
+	for(var i in BOXES){
+			var box = BOXES[i];
+			pack.push({
+					x:box.x,
+					y:box.y,
+					owner:box.Owner,
+					type:box.Type
+			});
+	}
+	for(var i in SOCKET_LIST){
+			var socket = SOCKET_LIST[i];
+			socket.emit('Boxes',pack);
+	}
     var pack = [];
     for(var i in PLAYER_LIST){
         var player = PLAYER_LIST[i];

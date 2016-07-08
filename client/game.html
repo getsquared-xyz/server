@@ -26,8 +26,10 @@
     imgs.You.src = "./client/SquaredGraphics/YourPlayer.png";
     imgs.Other=new Image();
     imgs.Other.src = "./client/SquaredGraphics/OtherPlayers.png";
-    imgs.YourDrop=new Image();
-    imgs.YourDrop.src = "./client/SquaredGraphics/YourDrops.png";
+    imgs.YourDrop1=new Image();
+    imgs.YourDrop1.src = "./client/SquaredGraphics/YourDrops1.png";
+    imgs.YourDrop2=new Image();
+    imgs.YourDrop2.src = "./client/SquaredGraphics/YourDrops2.png";
     imgs.OtherDrops=new Image();
     imgs.OtherDrops.src = "./client/SquaredGraphics/OtherDrops.png";
 
@@ -44,14 +46,32 @@
 
         ctx.clearRect(0,0,500,500);
         ctx.fillStyle="black";
-        ctx.fillRect(0,0-me.yoff,gamesize,1);
-        ctx.fillRect(0-me.xoff,0,1,gamesize);
-        ctx.fillRect(gamesize+20-me.xoff,0,1,gamesize);
-        ctx.fillRect(0,gamesize+20-me.yoff,gamesize,1);
+        ctx.fillRect(0,0-me.yoff,gamesize,5);
+        ctx.fillRect(0-me.xoff,0,5,gamesize);
+        ctx.fillRect(gamesize+20-me.xoff,0,5,gamesize);
+        ctx.fillRect(0,gamesize+20-me.yoff,gamesize,5);
+        /*
+        Grid stuffs
+        */
+        ctx.fillStyle="grey";
+        /*x stuffs
+        */
+        for(var i = 0 ; i < 1001; i = i + 40) {
+        ctx.fillRect(i-me.xoff,0,1,gamesize);
+      }
+        /*y stuffs
+        */
+        for(var i = 0 ; i < 1001; i = i + 40) {
+        ctx.fillRect(0,i-me.yoff,gamesize,1);
+      }
         ctx.fillStyle="#FF0000";
         for(var i = 0 ; i < Boxes.length; i++) {
           if(Boxes[i].owner == qs["name"]) {
-          ctx.drawImage(imgs.YourDrop,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+            if (Boxes[i].type=="1") {
+          ctx.drawImage(imgs.YourDrop1,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+        } else if (Boxes[i].type=="2") {
+          ctx.drawImage(imgs.YourDrop2,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
+        }
         } else {
           ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,10,10);
         }
@@ -92,7 +112,8 @@
             socket.emit('keyPress',{inputId:'up',state:true});
         else if(event.keyCode === 32) // w
             socket.emit('Space',"Clicked");
-
+            else if(event.keyCode === 66) // w
+                socket.emit('B',"Clicked");
     }
     document.onkeyup = function(event){
         if(event.keyCode === 68)    //d
