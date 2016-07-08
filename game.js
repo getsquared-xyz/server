@@ -19,6 +19,7 @@ var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
 var gamesize=1000;
+var gamesize2=2000;
 var Player = function(id){
     var self = {
         x:250,
@@ -36,27 +37,27 @@ var Player = function(id){
     }
     self.updatePosition = function(){
         if(self.pressingRight){
-					if (self.x<=gamesize-10) {
+					if (self.x<=gamesize-432.475) {
             self.x += self.maxSpd;
             self.xoff += self.maxSpd;
 						}
 
 						}
         if(self.pressingLeft) {
-					if (self.x>=10) {
+					if (self.x>=-422.475) {
             self.x -= self.maxSpd;
             self.xoff -= self.maxSpd;
 					}
 
 						}
         if(self.pressingUp){
-					if (self.y>=10) {
+					if (self.y>=-97) {
             self.y -= self.maxSpd;
             self.yoff -= self.maxSpd;
 					}
 				}
         if(self.pressingDown){
-					if (self.y<=gamesize-10) {
+					if (self.y<=gamesize-102) {
             self.y += self.maxSpd;
             self.yoff += self.maxSpd;
 					}
@@ -84,7 +85,6 @@ io.sockets.on('connection', function(socket){
 
     var player = Player(socket.id);
     PLAYER_LIST[socket.id] = player;
-
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
@@ -95,8 +95,14 @@ io.sockets.on('connection', function(socket){
 		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name);
 		    BOXES[s] = box;
 				PLAYER_LIST[socket.id].boxCount++;
-				}
+			}
+			if (PLAYER_LIST[socket.id].boxCount==4) {
+				rectofDEATH();
+			}
     });
+		    function rectofDEATH(){
+            socket.emit("rectofDEATH",'true');
+				}
 			socket.on("name",function(name){
 	      used=false;
 	      if (name!=="" && name.length < 11 && isValid(name)) {
