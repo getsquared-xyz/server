@@ -7,6 +7,7 @@ The official squared.io server stuff repo
 - [ ] Add fullscreen *DO FIRST* *MUST DO!!!!!*
 - [x] Add * dramatic music * "Rectangle of Death" 
 - [x] Add better graphics rendering
+- [ ] Add server status
 - [ ] Add dummy squares
 - [ ] Add dramatic music
 - [ ] Add start invincibilty
