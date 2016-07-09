@@ -202,7 +202,7 @@ function runCollisionText() {
 							id: BOXES[i].UUID,
 							x: BOXES[i].x,
 							y: BOXES[i].y,
-							owner:BOXES[i].Owner
+							owner:BOXES[i].Owner,
 					});
 				}
 			}
@@ -211,14 +211,19 @@ function runCollisionText() {
 				x:b[0].x,
 				y:b[1].y,
 				w:-(b[0].x-b[1].x),
-				h:-(b[0].y-b[1].y)
+				h:-(b[0].y-b[1].y),
+				owner:b[0].owner
 			}
 			for(var p in PLAYER_LIST){
 
 				var user=PLAYER_LIST[p];
-				if (user.name !== b[0].owner){
+				console.log(z.owner,user.name);
+				if (z.owner != user.name) {
+					console.log("Not Owner")
 			intersectRect(user, z);
-			}
+		} else {
+			console.log("Owner");
+		}
 		}
 	}
 		catch(err) {
