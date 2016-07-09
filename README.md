@@ -7,6 +7,8 @@ The official squared.io server stuff repo
 - [ ] Add fullscreen *On Hold*
 - [x] Add * dramatic music * "Rectangle of Death" 
 - [x] Add better graphics rendering
+- [ ] Add Death *In Progress*
+- [ ] Add random spawning point *On Hold*
 - [ ] Add server status *On Hold*
 - [ ] Add dummy squares *On Hold*
 - [ ] Add dramatic music *Never*
