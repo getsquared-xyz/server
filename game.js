@@ -173,8 +173,8 @@ console.log(rect2);
 }
 }
 function intersectRect(rect1, rect2) {
-	if (rect1.y < rect2.y + rect2.h &&
-   rect1.y + rect1.w > rect2.y &&
+	if (-(rect1.y) < -(rect2.y) + rect2.h &&
+   -(rect1.y) + rect1.w > -(rect2.y) &&
    rect1.x < rect2.x + rect2.w &&
    rect1.h + rect1.x > rect2.x) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
