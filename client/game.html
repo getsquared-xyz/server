@@ -65,21 +65,21 @@
         for(var i = 0 ; i < 1001; i = i + 39.3) {
         ctx.fillRect(0,i-me.yoff,gamesize,1);
       }
-      ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
       ctx.strokeStyle="black";
       for(var i = 0 ; i < Boxes.length; i++) {
         if(Boxes[i].owner == qs["name"]) {
           if (Boxes[i].type=="1") {
-        ctx.drawImage(imgs.YourDrop1,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
+        roundRect(Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15,5,"round","yellow","orange");
       } else if (Boxes[i].type=="2") {
         ctx.drawImage(imgs.YourDrop2,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
       }
       } else {
-        ctx.drawImage(imgs.OtherDrops,Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15);
+        roundRect(Boxes[i].x-me.xoff,Boxes[i].y-me.yoff,15,15,5,"round","red","#c90000");
       }
       }
 
       for(var i in info){
+        ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
         var b = [];
         var player=info[i];
         try {
@@ -104,12 +104,10 @@
           ctx.fillStyle="black";
           if(info[i].name == qs["name"]) {
             ctx.fillText("You",250,250);
-            ctx.drawImage(imgs.You, 250, 250,35,35);
-
-
+            roundRect(250,250,30,30,7,"round","grey","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff,info[i].y-me.yoff);
-            ctx.drawImage(imgs.Other,info[i].x-me.xoff,info[i].y-me.yoff,35,35);
+            roundRect(info[i].x-me.xoff,info[i].y-me.yoff,30,30,7,"round","red","black");
             }
         }
 
@@ -148,5 +146,18 @@
         else if(event.keyCode === 87) // w
             socket.emit('keyPress',{inputId:'up',state:false});
     }
+function roundRect(x,y,w,h,cr,join,color,outcolor){
+    var rectX = x;
+    var rectY = y;
+    var rectWidth = w;
+    var rectHeight = h;
+    var cornerRadius = cr;
 
+    ctx.lineJoin = join;
+    ctx.lineWidth = cornerRadius;
+    ctx.fillStyle=color
+    ctx.strokeStyle=outcolor;
+    ctx.strokeRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
+    ctx.fillRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
+}
 </script>
