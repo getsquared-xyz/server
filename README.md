@@ -5,7 +5,7 @@ The official squared.io server stuff repo
 - [x] Add ability to place cubes
 - [x] Add background grid
 - [x] Add fullscreen
-- [x] Add * dramatic music * "Rectangle of Death" 
+- [x] Add * dramatic music * "Rectangle of Death(ROD)" 
 - [x] Add better graphics rendering
 - [ ] Add Death *In Progress*
 - [ ] Add random spawning point *On Hold*
