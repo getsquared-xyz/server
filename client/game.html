@@ -170,6 +170,28 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         else if(event.keyCode === 87) // w
             socket.emit('keyPress',{inputId:'up',state:false});
     }
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+if (window.DeviceMotionEvent != undefined && iOS) {
+	window.ondevicemotion = function(e) {
+		if (e.accelerationIncludingGravity.x>0) {
+      socket.emit('keyPress',{inputId:'left',state:false});
+			socket.emit('keyPress',{inputId:'right',state:true});
+		} else {
+			socket.emit('keyPress',{inputId:'right',state:false});
+      socket.emit('keyPress',{inputId:'left',state:true});
+		}
+		if (e.accelerationIncludingGravity.y>0) {
+      socket.emit('keyPress',{inputId:'down',state:false});
+			socket.emit('keyPress',{inputId:'up',state:true});
+
+		} else {
+			socket.emit('keyPress',{inputId:'up',state:false});
+      socket.emit('keyPress',{inputId:'down',state:true});
+		}
+	}
+} else {
+
+}
 function roundRect(x,y,w,h,cr,join,color,outcolor){
     var rectX = x;
     var rectY = y;
