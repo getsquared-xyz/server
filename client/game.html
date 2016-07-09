@@ -32,8 +32,8 @@
       var gamesize2=gamesize*2;
       var winx=window.innerWidth/2;
       var winy=window.innerHeight/2;
-      var windx=winx-250;
-      var windy=winy-250;
+      var windx=winx-270;
+      var windy=winy-270;
         // resize the canvas to fill browser window dynamically
         window.addEventListener('resize', resizeCanvas, false);
 
@@ -68,16 +68,10 @@ function drawStuff(winx2,winy2,windx2,windy2) {
       }
 
         ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-        ctx.fillStyle="black";
-        ctx.fillRect(0,0-me.yoff+windy,gamesize2,5);
-        ctx.fillRect(0-me.xoff+windx,0,5,gamesize);
-        ctx.fillRect(gamesize+20-me.xoff+windx,0,5,gamesize);
-        ctx.fillRect(0,gamesize+20-me.yoff+windy,gamesize2,5);
+        ctx.fillStyle="grey";
         /*
         Grid stuffs
-        */
-        ctx.fillStyle="grey";
-        /*x stuffs
+        x stuffs
         */
         for(var i = 0 ; i < gamesize+1; i = i + 39.3) {
         ctx.fillRect(i-me.xoff+windx,0,1,gamesize);
@@ -87,6 +81,12 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         for(var i = 0 ; i < gamesize+1; i = i + 39.3) {
         ctx.fillRect(0,i-me.yoff+windy,gamesize2,1);
       }
+        ctx.fillStyle="black";
+        ctx.fillRect(0,0-me.yoff+windy,gamesize2,5);
+        ctx.fillRect(0-me.xoff+windx,0,5,gamesize);
+        ctx.fillRect(gamesize+20-me.xoff+windx,0,5,gamesize);
+        ctx.fillRect(0,gamesize+20-me.yoff+windy,gamesize2,5);
+        
       ctx.strokeStyle="black";
       for(var i = 0 ; i < Boxes.length; i++) {
         if(Boxes[i].owner == qs["name"]) {
@@ -125,8 +125,10 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         for(var i = 0 ; i < data.length; i++) {
           ctx.fillStyle="black";
           if(info[i].name == qs["name"]) {
-            ctx.fillText("You",window.innerWidth/2,window.innerHeight/2);
-            roundRect(window.innerWidth/2,window.innerHeight/2,30,30,7,"round","grey","black");
+            locx=window.innerWidth/2
+            locy=window.innerHeight/2
+            ctx.fillText("You",locx-20,locy-20);
+            roundRect(locx-20,locy-20,30,30,7,"round","grey","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx,info[i].y-me.yoff+windy);
             roundRect(info[i].x-me.xoff+windx,info[i].y-me.yoff+windy,30,30,7,"round","red","black");
