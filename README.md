@@ -4,13 +4,13 @@ The official squared.io server stuff repo
 - [x] Add scrolling
 - [x] Add ability to place cubes
 - [x] Add background grid
-- [ ] Add fullscreen *DO FIRST* *MUST DO!!!!!*
+- [ ] Add fullscreen *On Hold*
 - [x] Add * dramatic music * "Rectangle of Death" 
 - [x] Add better graphics rendering
-- [ ] Add server status
-- [ ] Add dummy squares
-- [ ] Add dramatic music
-- [ ] Add start invincibilty
-- [ ] Add points and leaderboard (Not that anyone will ever get on it)
+- [ ] Add server status *On Hold*
+- [ ] Add dummy squares *On Hold*
+- [ ] Add dramatic music *Never*
+- [ ] Add start invincibilty *On Hold*
+- [ ] Add points and leaderboard (Not that anyone will ever get on it) *DO FIRST* *MUST DO!!!!!*
 - [ ] One page design with server transfer multiple rooms and *moar*
-- [ ] Add Ads
+- [ ] Add Ads *On Hold till we become popular*
