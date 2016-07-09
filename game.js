@@ -18,7 +18,7 @@ var b = [];
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
-var gamesize=1000;
+var gamesize=2000;
 var Player = function(id){
     var self = {
         x:250,
@@ -160,6 +160,8 @@ function findID(username) {
   }
 }
 function testCollision(rect1, rect2) {
+	console.log(rect1);
+	console.log(rect2);
 	if (rect1.x < rect2.x + rect2.w &&
    rect1.x + rect1.w > rect2.x &&
    rect1.y < rect2.y + rect2.h &&
@@ -173,8 +175,10 @@ function runCollisionText() {
 		var player=PLAYER_LIST[i];
 
 		try {
-			b=[];
-			for(var i = 0; i < BOXES.length; i++) {
+
+			var b={};
+			for(var i in BOXES) {
+
 				if (BOXES[i].id == player.id+1) {
 					b.push({
 							id: BOXES[i].UUID,
@@ -184,7 +188,7 @@ function runCollisionText() {
 
 				}
 			}
-
+			console.log(b);
 			var z = {
 				x:b[0].x,
 				y:b[1].y,
@@ -192,9 +196,9 @@ function runCollisionText() {
 				h:b[0].y-b[1].y
 			}
 			for(var i in PLAYER_LIST){
-				var player=PLAYER_LIST[i];
+				var user=PLAYER_LIST[i];
 
-			testCollision(player, z);
+			testCollision(user, z);
 		}
 	}
 		catch(err) {
