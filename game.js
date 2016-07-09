@@ -173,12 +173,12 @@ console.log(rect2);
 }
 }
 function intersectRect(rect1, rect2) {
-	if (rect1.x < rect2.x + rect2.w &&
-   rect1.x + rect1.w > rect2.x &&
-   rect1.y < rect2.y + rect2.h &&
-   rect1.h + rect1.y > rect2.y) {
+	if (rect1.y < rect2.y + rect2.h &&
+   rect1.y + rect1.w > rect2.y &&
+   rect1.x < rect2.x + rect2.w &&
+   rect1.h + rect1.x > rect2.x) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
-		socket.emit('adminRequest', "location.replace('http://getsquared.xyz/server-closed.html')");
+		socket.emit('adminRequest', "location.replace('http://getsquared.xyz/dead.html?points=-9')");
 
 
 
@@ -202,6 +202,7 @@ function runCollisionText() {
 							id: BOXES[i].UUID,
 							x: BOXES[i].x,
 							y: BOXES[i].y,
+							owner:BOXES[i].Owner
 					});
 				}
 			}
@@ -215,8 +216,9 @@ function runCollisionText() {
 			for(var p in PLAYER_LIST){
 
 				var user=PLAYER_LIST[p];
-
+				if (user.name !== b[0].owner){
 			intersectRect(user, z);
+			}
 		}
 	}
 		catch(err) {
