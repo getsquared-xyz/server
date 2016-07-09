@@ -26,13 +26,15 @@ var Player = function(id){
         xoff:0,
         yoff:0,
         id:id,
+				points:15,
         pressingRight:false,
         pressingLeft:false,
         pressingUp:false,
         pressingDown:false,
         maxSpd:10,
 				name:"",
-				boxCount:0
+				box1Count:0,
+				box2Count:0
     }
     self.updatePosition = function(){
         if(self.pressingRight){
@@ -64,12 +66,14 @@ var Player = function(id){
     }
     return self;
 }
-var Boxes = function(oX,oY, owner){
+var Boxes = function(oX,oY, owner,type,id){
     var self = {
         x:oX,
         y:oY,
         time:5,
-				Owner:owner
+				Owner:owner,
+				Type:type,
+				UUID:id,
     }
     self.updatePosition = function(){
 
@@ -82,7 +86,7 @@ io.sockets.on('connection', function(socket){
     socket.id = Math.random();
     SOCKET_LIST[socket.id] = socket;
 
-    var player = Player(socket.id)
+    var player = Player(socket.id);
     PLAYER_LIST[socket.id] = player;
 
     socket.on('disconnect',function(){
@@ -90,11 +94,19 @@ io.sockets.on('connection', function(socket){
         delete PLAYER_LIST[socket.id];
     });
 		socket.on('Space',function(){
-			if (PLAYER_LIST[socket.id].boxCount<4) {
+			if (PLAYER_LIST[socket.id].box1Count<2) {
 				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name);
+		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
 		    BOXES[s] = box;
-				PLAYER_LIST[socket.id].boxCount++;
+				PLAYER_LIST[socket.id].box1Count++;
+				}
+    });
+		socket.on('B',function(){
+			if (PLAYER_LIST[socket.id].box2Count<2) {
+				s = Math.random();
+		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"2",PLAYER_LIST[socket.id].id+2);
+		    BOXES[s] = box;
+				PLAYER_LIST[socket.id].box2Count++;
 				}
     });
 			socket.on("name",function(name){
@@ -153,7 +165,11 @@ setInterval(function(){
 					delete BOXES[i];
 					try {
 						var player = PLAYER_LIST[findID(box.Owner)];
-						player.boxCount--;
+						if (box.Type=="1") {
+						player.box1Count--;
+					} else {
+						player.box2Count--;
+					}
 					}
 					catch(err) {
     				console.log("Player Left Before Box Removed")
@@ -171,7 +187,9 @@ setInterval(function(){
 			pack.push({
 					x:box.x,
 					y:box.y,
-					owner:box.Owner
+					owner:box.Owner,
+					type:box.Type,
+					id:box.UUID
 			});
 	}
 	for(var i in SOCKET_LIST){
@@ -189,6 +207,7 @@ setInterval(function(){
             y:player.y,
             number:player.number,
 						name:player.name,
+						id:player.id
         });
     }
     for(var i in SOCKET_LIST){
