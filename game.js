@@ -14,7 +14,9 @@ app.get('/style',function(req, res) {
 });
 serv.listen(2000);
 console.log("Server started.");
-var b = [];
+var b;
+var p;
+var z;
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
@@ -159,9 +161,10 @@ function findID(username) {
     }
   }
 }
-function testCollision(rect1, rect2) {
-	console.log(rect1);
-	console.log(rect2);
+function testCollision(rect3, rect4) {
+var rect1 = rect3;
+var rect2 = rect4;
+console.log(rect2);
 	if (rect1.x < rect2.x + rect2.w &&
    rect1.x + rect1.w > rect2.x &&
    rect1.y < rect2.y + rect2.h &&
@@ -169,36 +172,51 @@ function testCollision(rect1, rect2) {
     console.log("Touched");
 }
 }
+function intersectRect(rect1, rect2) {
+	if (rect1.x < rect2.x + rect2.w &&
+   rect1.x + rect1.w > rect2.x &&
+   rect1.y < rect2.y + rect2.h &&
+   rect1.h + rect1.y > rect2.y) {
+		var socket = SOCKET_LIST[findID(rect1.name)];
+		socket.emit('adminRequest', "location.replace('http://getsquared.xyz/server-closed.html')");
+
+
+
+} else {
+}
+}
 function runCollisionText() {
 	for(var i in PLAYER_LIST){
 
 		var player=PLAYER_LIST[i];
-
+		b=[];
+		p=65;
 		try {
 
-			var b={};
-			for(var i in BOXES) {
 
-				if (BOXES[i].id == player.id+1) {
+
+			for(var i in BOXES) {
+				if (BOXES[i].UUID == player.id+1) {
+
 					b.push({
 							id: BOXES[i].UUID,
 							x: BOXES[i].x,
 							y: BOXES[i].y,
 					});
-
 				}
 			}
-			console.log(b);
-			var z = {
+
+			z = {
 				x:b[0].x,
 				y:b[1].y,
-				w:b[1].x-b[0].x,
-				h:b[0].y-b[1].y
+				w:-(b[0].x-b[1].x),
+				h:-(b[0].y-b[1].y)
 			}
-			for(var i in PLAYER_LIST){
-				var user=PLAYER_LIST[i];
+			for(var p in PLAYER_LIST){
 
-			testCollision(user, z);
+				var user=PLAYER_LIST[p];
+
+			intersectRect(user, z);
 		}
 	}
 		catch(err) {
