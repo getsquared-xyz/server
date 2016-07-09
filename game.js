@@ -14,7 +14,7 @@ app.get('/style',function(req, res) {
 });
 serv.listen(2000);
 console.log("Server started.");
-
+var b = [];
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
@@ -26,6 +26,8 @@ var Player = function(id){
         xoff:0,
         yoff:0,
         id:id,
+				w:30,
+				h:30,
         pressingRight:false,
         pressingLeft:false,
         pressingUp:false,
@@ -37,7 +39,7 @@ var Player = function(id){
     }
     self.updatePosition = function(){
         if(self.pressingRight){
-					if (self.x<=gamesize-10) {
+					if (self.x<=gamesize-(self.w/2)) {
             self.x += self.maxSpd;
             self.xoff += self.maxSpd;
 						}
@@ -57,7 +59,7 @@ var Player = function(id){
 					}
 				}
         if(self.pressingDown){
-					if (self.y<=gamesize-10) {
+					if (self.y<=gamesize-(self.h/2)) {
             self.y += self.maxSpd;
             self.yoff += self.maxSpd;
 					}
@@ -157,6 +159,50 @@ function findID(username) {
     }
   }
 }
+function testCollision(rect1, rect2) {
+	if (rect1.x < rect2.x + rect2.w &&
+   rect1.x + rect1.w > rect2.x &&
+   rect1.y < rect2.y + rect2.h &&
+   rect1.h + rect1.y > rect2.y) {
+    console.log("Touched");
+}
+}
+function runCollisionText() {
+	for(var i in PLAYER_LIST){
+
+		var player=PLAYER_LIST[i];
+
+		try {
+			b=[];
+			for(var i = 0; i < BOXES.length; i++) {
+				if (BOXES[i].id == player.id+1) {
+					b.push({
+							id: BOXES[i].UUID,
+							x: BOXES[i].x,
+							y: BOXES[i].y,
+					});
+
+				}
+			}
+
+			var z = {
+				x:b[0].x,
+				y:b[1].y,
+				w:b[1].x-b[0].x,
+				h:b[0].y-b[1].y
+			}
+			for(var i in PLAYER_LIST){
+				var player=PLAYER_LIST[i];
+
+			testCollision(player, z);
+		}
+	}
+		catch(err) {
+
+		}
+
+	}
+}
 setInterval(function(){
     for(var i in BOXES){
         var box = BOXES[i];
@@ -180,6 +226,7 @@ setInterval(function(){
     }
 },1000);
 setInterval(function(){
+	runCollisionText();
 	var pack = [];
 	for(var i in BOXES){
 			var box = BOXES[i];
