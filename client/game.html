@@ -32,8 +32,8 @@
       var gamesize2=gamesize*2;
       var winx=window.innerWidth/2;
       var winy=window.innerHeight/2;
-      var windx=winx-270;
-      var windy=winy-270;
+      var windx=winx-250;
+      var windy=winy-250;
         // resize the canvas to fill browser window dynamically
         window.addEventListener('resize', resizeCanvas, false);
 
@@ -132,8 +132,8 @@ function drawStuff(winx2,winy2,windx2,windy2) {
             roundRect(locx-40,locy-40,30,30,7,"round","grey","black");
 
           } else {
-            ctx.fillText(info[i].name,info[i].x-me.xoff+windx,info[i].y-me.yoff+windy);
-            roundRect(info[i].x-me.xoff+windx,info[i].y-me.yoff+windy,30,30,7,"round","red","black");
+            ctx.fillText(info[i].name,info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20);
+            roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","red","black");
             }
         }
 
@@ -142,7 +142,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
        eval(data);
    });
    socket.on('dead', function (data) {
-      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server)
+      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server+'&killer='+data.killer)
   });
    socket.on('Boxes',function(data){
      Boxes = data;
