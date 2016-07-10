@@ -8,7 +8,7 @@ The official squared.io server stuff repo
 - [x] Add * dramatic music * "Rectangle of Death(ROD)" 
 - [x] Add better graphics rendering
 - [x] Add Death
-- [ ] Add Minimap
+- [ ] Add Minimap *On Hold*
 - [ ] Add points and leaderboard (Not that anyone will ever get on it) *In Progress*
 - [ ] Add random spawning point *On Hold*
 - [ ] Add server status *On Hold*
