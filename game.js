@@ -161,33 +161,31 @@ function findID(username) {
     }
   }
 }
-function hitBox2(souce, target) {
-	if (souce.x+souce.w<target.x || target.x+target.w<souce.x || souce.y+souce.h<target.y || target.y+target.h<souce.y){
-		return true;
-	} else {
-		return false;
-	}
+function isInside(x, y, z1, z2, z3, z4) {
+    x1 = Math.min(z1, z3);
+    x2 = Math.max(z1, z3);
+    y1 = Math.min(z2, z4);
+    y2 = Math.max(z2, z4);
+    if ((x1 <= x ) && ( x <= x2) && (y1 <= y) && (y <= y2)) {
+        return true;
+    } else {
+        return false;
+    };
+};
+function intersects(a, b) {
+   function checkContains(point, left, right) {
+       return point > left && point < right;
+   }
+   return  (checkContains(a.x, b.x, b.x + b.w)
+             || checkContains(a.x + a.w, b.x, b.x + b.w)) &&
+           (checkContains(a.y, b.y, b.y + b.h)
+             || checkContains(a.y + a.h, b.y, b.y + b.h));
 }
-function hitBox3(r1, r2){
-	return !(r2.x > r1.w ||
-           r2.w < r1.x ||
-           r2.h > r1.y ||
-           r2.y < r1.h);
-}
-function hitBox(object, object2) {
-
-	if (object1.x < object2.x + object2.w  && object1.x + object1.w > object2.x &&
-	object1.y < object2.y + object2.h && object1.y + object1.h > object2.y) {
-return true;
-}
-}
+//isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x+(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)
 function intersectRect(rect1, rect2) {
-	if (-(rect1.y) <= -(rect2.y) + rect2.h &&
-   -(rect1.y) + rect1.w >= -(rect2.y) &&
-    rect1.x <= rect2.x + rect2.w &&
-    rect1.h + rect1.x >= rect2.x) {
+	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x+(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
-		socket.emit('adminRequest', "location.replace('http://getsquared.xyz/dead.html?points=-9&name=')");
+		socket.emit('dead', "78");
 
 
 
@@ -218,9 +216,9 @@ function runCollisionText() {
 
 			z = {
 				x:b[0].x,
-				y:b[1].y,
-				w:-(b[0].x-b[1].x),
-				h:-(b[0].y-b[1].y),
+				y:b[0].y,
+				x2:b[1].x,
+				y2:b[1].y,
 				owner:b[0].owner
 			}
 			for(var p in PLAYER_LIST){

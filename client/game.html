@@ -82,10 +82,10 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         ctx.fillRect(0,i-me.yoff+windy,gamesize2,1);
       }
         ctx.fillStyle="black";
-        ctx.fillRect(0,0-me.yoff+windy,gamesize2,5);
-        ctx.fillRect(0-me.xoff+windx,0,5,gamesize);
-        ctx.fillRect(gamesize+20-me.xoff+windx,0,5,gamesize);
-        ctx.fillRect(0,gamesize+20-me.yoff+windy,gamesize2,5);
+        ctx.fillRect(0,0-me.yoff+windy-25,gamesize2,5);
+        ctx.fillRect(0-me.xoff+windx-25,0,5,gamesize);
+        ctx.fillRect(gamesize-me.xoff+windx,0,5,gamesize);
+        ctx.fillRect(0,gamesize-me.yoff+windy,gamesize2,5);
 
       ctx.strokeStyle="black";
       for(var i = 0 ; i < Boxes.length; i++) {
@@ -127,6 +127,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
           if(info[i].name == qs["name"]) {
             locx=window.innerWidth/2
             locy=window.innerHeight/2
+            ctx.font = '20px Arial';
             ctx.fillText("You",locx-20,locy-20);
             roundRect(locx-20,locy-20,30,30,7,"round","grey","black");
 
@@ -140,6 +141,9 @@ function drawStuff(winx2,winy2,windx2,windy2) {
     socket.on('adminRequest', function (data) {
        eval(data);
    });
+   socket.on('dead', function (data) {
+      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data)
+  });
    socket.on('Boxes',function(data){
      Boxes = data;
 
@@ -174,7 +178,6 @@ function drawStuff(winx2,winy2,windx2,windy2) {
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 if (window.DeviceMotionEvent != undefined && iOS) {
 	window.ondevicemotion = function(e) {
-<<<<<<< HEAD
 		if (e.accelerationIncludingGravity.x>-1) {
       socket.emit('keyPress',{inputId:'left',state:false});
 			socket.emit('keyPress',{inputId:'right',state:true});
@@ -184,16 +187,6 @@ if (window.DeviceMotionEvent != undefined && iOS) {
 			socket.emit('keyPress',{inputId:'right',state:false});
 		}
 		if (e.accelerationIncludingGravity.y>-1) {
-=======
-		if (e.accelerationIncludingGravity.x>0) {
-      socket.emit('keyPress',{inputId:'left',state:false});
-			socket.emit('keyPress',{inputId:'right',state:true});
-		} else {
-			socket.emit('keyPress',{inputId:'right',state:false});
-      socket.emit('keyPress',{inputId:'left',state:true});
-		}
-		if (e.accelerationIncludingGravity.y>0) {
->>>>>>> origin/master
       socket.emit('keyPress',{inputId:'down',state:false});
 			socket.emit('keyPress',{inputId:'up',state:true});
 
@@ -202,12 +195,9 @@ if (window.DeviceMotionEvent != undefined && iOS) {
       socket.emit('keyPress',{inputId:'down',state:true});
 		}
 	}
-<<<<<<< HEAD
   document.addEventListener('touchstart',function(e) {
       socket.emit('Space',"Clicked");
    });
-=======
->>>>>>> origin/master
 } else {
 
 }
