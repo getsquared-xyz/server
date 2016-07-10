@@ -21,12 +21,14 @@ var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
 var gamesize=2300;
+var xr=Math.floor((Math.random() * gamesize-1) + 1);
+var yr=Math.floor((Math.random() * gamesize-1) + 1);
 var Player = function(id){
     var self = {
-        x:250,
-        y:250,
-        xoff:0,
-        yoff:0,
+        x:xr,
+        y:yr,
+        xoff:xr-260,
+        yoff:yr-250,
         id:id,
 				w:30,
 				h:30,
