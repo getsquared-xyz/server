@@ -39,7 +39,7 @@ var Player = function(id){
         pressingDown:false,
         maxSpd:10,
 				name:"",
-				inv:5,
+				inv:1,
 				box1Count:0,
 				box2Count:0,
 				points:30,
