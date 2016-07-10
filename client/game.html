@@ -86,7 +86,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         ctx.fillRect(0-me.xoff+windx,0,5,gamesize);
         ctx.fillRect(gamesize+20-me.xoff+windx,0,5,gamesize);
         ctx.fillRect(0,gamesize+20-me.yoff+windy,gamesize2,5);
-        
+
       ctx.strokeStyle="black";
       for(var i = 0 ; i < Boxes.length; i++) {
         if(Boxes[i].owner == qs["name"]) {
@@ -129,6 +129,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
             locy=window.innerHeight/2
             ctx.fillText("You",locx-20,locy-20);
             roundRect(locx-20,locy-20,30,30,7,"round","grey","black");
+
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx,info[i].y-me.yoff+windy);
             roundRect(info[i].x-me.xoff+windx,info[i].y-me.yoff+windy,30,30,7,"round","red","black");
@@ -170,6 +171,32 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         else if(event.keyCode === 87) // w
             socket.emit('keyPress',{inputId:'up',state:false});
     }
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+if (window.DeviceMotionEvent != undefined && iOS) {
+	window.ondevicemotion = function(e) {
+		if (e.accelerationIncludingGravity.x>-1) {
+      socket.emit('keyPress',{inputId:'left',state:false});
+			socket.emit('keyPress',{inputId:'right',state:true});
+		}
+    if (e.accelerationIncludingGravity.x<1) {
+      socket.emit('keyPress',{inputId:'left',state:true});
+			socket.emit('keyPress',{inputId:'right',state:false});
+		}
+		if (e.accelerationIncludingGravity.y>-1) {
+      socket.emit('keyPress',{inputId:'down',state:false});
+			socket.emit('keyPress',{inputId:'up',state:true});
+
+		} else {
+			socket.emit('keyPress',{inputId:'up',state:false});
+      socket.emit('keyPress',{inputId:'down',state:true});
+		}
+	}
+  document.addEventListener('touchstart',function(e) {
+      socket.emit('Space',"Clicked");
+   });
+} else {
+
+}
 function roundRect(x,y,w,h,cr,join,color,outcolor){
     var rectX = x;
     var rectY = y;

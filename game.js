@@ -161,24 +161,33 @@ function findID(username) {
     }
   }
 }
-function testCollision(rect3, rect4) {
-var rect1 = rect3;
-var rect2 = rect4;
-console.log(rect2);
-	if (rect1.x < rect2.x + rect2.w &&
-   rect1.x + rect1.w > rect2.x &&
-   rect1.y < rect2.y + rect2.h &&
-   rect1.h + rect1.y > rect2.y) {
-    console.log("Touched");
+function hitBox2(souce, target) {
+	if (souce.x+souce.w<target.x || target.x+target.w<souce.x || souce.y+souce.h<target.y || target.y+target.h<souce.y){
+		return true;
+	} else {
+		return false;
+	}
+}
+function hitBox3(r1, r2){
+	return !(r2.x > r1.w ||
+           r2.w < r1.x ||
+           r2.h > r1.y ||
+           r2.y < r1.h);
+}
+function hitBox(object, object2) {
+
+	if (object1.x < object2.x + object2.w  && object1.x + object1.w > object2.x &&
+	object1.y < object2.y + object2.h && object1.y + object1.h > object2.y) {
+return true;
 }
 }
 function intersectRect(rect1, rect2) {
 	if (-(rect1.y) <= -(rect2.y) + rect2.h &&
    -(rect1.y) + rect1.w >= -(rect2.y) &&
-   rect1.x <= rect2.x + rect2.w &&
-   rect1.h + rect1.x >= rect2.x) {
+    rect1.x <= rect2.x + rect2.w &&
+    rect1.h + rect1.x >= rect2.x) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
-		socket.emit('adminRequest', "location.replace('http://getsquared.xyz/dead.html?points=-9')");
+		socket.emit('adminRequest', "location.replace('http://getsquared.xyz/dead.html?points=-9&name=')");
 
 
 
