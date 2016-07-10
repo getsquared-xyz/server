@@ -142,7 +142,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
        eval(data);
    });
    socket.on('dead', function (data) {
-      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data)
+      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server)
   });
    socket.on('Boxes',function(data){
      Boxes = data;
@@ -191,11 +191,17 @@ if (window.DeviceMotionEvent != undefined && iOS) {
       socket.emit('keyPress',{inputId:'left',state:false});
 			socket.emit('keyPress',{inputId:'right',state:false});
     }
-		if (e.accelerationIncludingGravity.y>-2) {
+    if (e.accelerationIncludingGravity.y<1&&e.accelerationIncludingGravity.y>-1) {
+      socket.emit('keyPress',{inputId:'down',state:false});
+			socket.emit('keyPress',{inputId:'up',state:false});
+
+		}
+		if (e.accelerationIncludingGravity.y>1) {
       socket.emit('keyPress',{inputId:'down',state:false});
 			socket.emit('keyPress',{inputId:'up',state:true});
 
-		} else {
+		}
+    if (e.accelerationIncludingGravity.y<-1) {
 			socket.emit('keyPress',{inputId:'up',state:false});
       socket.emit('keyPress',{inputId:'down',state:true});
 		}

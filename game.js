@@ -185,7 +185,7 @@ function intersects(a, b) {
 function intersectRect(rect1, rect2) {
 	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x+(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
-		socket.emit('dead', "78");
+		socket.emit('dead', {name:rect1.name,server:"http://jade.getsquared.xyz",killedBy:rect2.owner});
 
 
 
