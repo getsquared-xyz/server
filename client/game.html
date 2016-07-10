@@ -179,15 +179,19 @@ function drawStuff(winx2,winy2,windx2,windy2) {
     var dfgd = false;
 if (window.DeviceMotionEvent != undefined && iOS) {
 	window.ondevicemotion = function(e) {
-		if (e.accelerationIncludingGravity.x>-1) {
+		if (e.accelerationIncludingGravity.x>2) {
       socket.emit('keyPress',{inputId:'left',state:false});
 			socket.emit('keyPress',{inputId:'right',state:true});
 		}
-    if (e.accelerationIncludingGravity.x<1) {
+    if (e.accelerationIncludingGravity.x<-2) {
       socket.emit('keyPress',{inputId:'left',state:true});
 			socket.emit('keyPress',{inputId:'right',state:false});
 		}
-		if (e.accelerationIncludingGravity.y>-1) {
+    if (e.accelerationIncludingGravity.x>-2&&e.accelerationIncludingGravity.x<2) {
+      socket.emit('keyPress',{inputId:'left',state:false});
+			socket.emit('keyPress',{inputId:'right',state:false});
+    }
+		if (e.accelerationIncludingGravity.y>-2) {
       socket.emit('keyPress',{inputId:'down',state:false});
 			socket.emit('keyPress',{inputId:'up',state:true});
 
