@@ -119,7 +119,7 @@ io.sockets.on('connection', function(socket){
     });
 			socket.on("name",function(name){
 	      used=false;
-	      if (name!=="" && name.length < 11 && isValid(name)) {
+	      if (name!=="" && name.length < 21 && isValid(name)) {
 	        for(var i in PLAYER_LIST){
 	          var player = PLAYER_LIST[i];
 	          if (player.name==name) {
