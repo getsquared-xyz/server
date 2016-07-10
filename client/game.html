@@ -3,6 +3,13 @@
 </center>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
+var me={};
+var mp;
+Array.prototype.sortBy = function(p) {
+  return this.slice(0).sort(function(a,b) {
+    return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
+  });
+}
     qs = (function(a) {
     if (a == "") return {};
     var b = {};
@@ -28,7 +35,7 @@
       var me={};
       var info;
       var Boxs;
-      var gamesize=2000;
+      var gamesize=2300;
       var gamesize2=gamesize*2;
       var winx=window.innerWidth/2;
       var winy=window.innerHeight/2;
@@ -58,10 +65,11 @@ function drawStuff(winx2,winy2,windx2,windy2) {
   var windx = windx2;
   var windy = windy2;
     socket.on('newPositions',function(data){
-      var me={};
+
       info = data;
       for(var i = 0 ; i < data.length; i++) {
         if (info[i].name==qs["name"]) {
+          mp=info[i].points;
           me=info[i];
 
         }
@@ -121,12 +129,29 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         }
 
       }
+      ctx.fillStyle="grey";
+      ctx.font = '20px Arial';
+      var scoreboard = info.sortBy('points');
+      scoreboard.reverse();
+      try {
+        ctx.fillText("1. "+scoreboard[0].name+": "+scoreboard[0].points,0,20);
+        ctx.fillText("2. "+scoreboard[1].name+": "+scoreboard[1].points,0,40);
+        ctx.fillText("3. "+scoreboard[2].name+": "+scoreboard[2].points,0,60);
+        ctx.fillText("4. "+scoreboard[3].name+": "+scoreboard[3].points,0,80);
+        ctx.fillText("5. "+scoreboard[4].name+": "+scoreboard[4].points,0,100);
+
+      }
+      catch(err) {
+
+      }
 
         for(var i = 0 ; i < data.length; i++) {
           ctx.fillStyle="black";
           if(info[i].name == qs["name"]) {
             locx=window.innerWidth/2
             locy=window.innerHeight/2
+            ctx.font = '20px Arial';
+            ctx.fillText("Points: " + mp,0,120);
             ctx.font = '20px Arial';
             ctx.fillText("You",locx-40,locy-40);
             roundRect(locx-40,locy-40,30,30,7,"round","grey","black");
@@ -137,12 +162,13 @@ function drawStuff(winx2,winy2,windx2,windy2) {
             }
         }
 
+
     });
     socket.on('adminRequest', function (data) {
        eval(data);
    });
    socket.on('dead', function (data) {
-      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server+'&killer='+data.killer)
+      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server+'&killer='+data.killer+'&points='+data.points)
   });
    socket.on('Boxes',function(data){
      Boxes = data;

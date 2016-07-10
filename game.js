@@ -20,7 +20,7 @@ var z;
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
-var gamesize=2000;
+var gamesize=2300;
 var Player = function(id){
     var self = {
         x:250,
@@ -36,8 +36,10 @@ var Player = function(id){
         pressingDown:false,
         maxSpd:10,
 				name:"",
+				inv:5,
 				box1Count:0,
-				box2Count:0
+				box2Count:0,
+				points:30,
     }
     self.updatePosition = function(){
         if(self.pressingRight){
@@ -185,7 +187,11 @@ function intersects(a, b) {
 function intersectRect(rect1, rect2) {
 	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x+(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
-		socket.emit('dead', {name:rect1.name,server:"http://jade.getsquared.xyz",killer:rect2.owner});
+		var player = PLAYER_LIST[findID(rect2.owner)];
+		player.points=Math.floor(player.points+(rect1.points/2));
+		socket.emit('dead', {name:rect1.name,server:"http://jade.getsquared.xyz",killer:rect2.owner,points:rect1.points});
+		delete SOCKET_LIST[findID(rect1.name)];
+		delete PLAYER_LIST[findID(rect1.name)];
 		for(var i in BOXES) {
 			if (BOXES[i].Owner==rect1.name) {
 				delete BOXES[i];
@@ -230,7 +236,7 @@ function runCollisionText() {
 
 				var user=PLAYER_LIST[p];
 				console.log(z.owner,user.name);
-				if (z.owner != user.name) {
+				if (z.owner != user.name &&user.inv == 0) {
 					console.log("Not Owner")
 			intersectRect(user, z);
 		} else {
@@ -244,6 +250,14 @@ function runCollisionText() {
 
 	}
 }
+setInterval(function(){
+	for(var i in PLAYER_LIST){
+		var player = PLAYER_LIST[i];
+		if (player.inv > 0) {
+			player.inv--;
+		}
+	}
+},1000);
 setInterval(function(){
     for(var i in BOXES){
         var box = BOXES[i];
@@ -276,7 +290,7 @@ setInterval(function(){
 					y:box.y,
 					owner:box.Owner,
 					type:box.Type,
-					id:box.UUID
+					id:box.UUID,
 			});
 	}
 	for(var i in SOCKET_LIST){
@@ -294,7 +308,8 @@ setInterval(function(){
             y:player.y,
             number:player.number,
 						name:player.name,
-						id:player.id
+						id:player.id,
+						points:player.points
         });
     }
     for(var i in SOCKET_LIST){
