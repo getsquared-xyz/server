@@ -124,9 +124,6 @@ roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey",
             }
           }
           ctx.fillRect(b[0].x-me.xoff+windx,b[1].y-me.yoff+windy,b[1].x-b[0].x+15,b[0].y-b[1].y+15);
-          h=b[1].x-b[0].x+15;
-          w=b[0].y-b[1].y+15;
-          roundRect(window.innerWidth-260+b[0].x/100,window.innerHeight-260+b[1].y/100,h/15,w/15,0,"round","red","black");
         }
         catch(err) {
         }
@@ -157,11 +154,11 @@ roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey",
             ctx.font = '20px Arial';
             ctx.fillText("You",locx-40,locy-40);
             roundRect(locx-40,locy-40,30,30,7,"round","grey","black");
-            roundRect(window.innerWidth-260+info[i].x/10,window.innerHeight-260+info[i].y/10,5,5,.5,"round","green","black");
+            roundRect(window.innerWidth-260+info[i].x/20,window.innerHeight-260+info[i].y/20,5,5,.5,"round","green","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20);
             roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","red","black");
-            roundRect(window.innerWidth-260+info[i].x/10,window.innerHeight-260+info[i].y/10,5,5,.5,"round","red","black");
+            roundRect(window.innerWidth-260+info[i].x/20,window.innerHeight-260+info[i].y/20,5,5,.5,"round","red","black");
             }
         }
 
