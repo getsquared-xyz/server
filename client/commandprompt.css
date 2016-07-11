@@ -1,4 +1,4 @@
-cmd.msdos {
+.msdos {
   font-family:Courier;
  color: #CCCCCC;
   background: #000000;
@@ -6,7 +6,7 @@ cmd.msdos {
   padding: 10px;
 }
 
-cmd.greenletters {
+.greenletters {
   font-family:Courier;
  color: #15D43B;
   background: #000000;
