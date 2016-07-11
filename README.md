@@ -5,7 +5,7 @@ The official getsquared.xyz server stuff repo
 - [x] Add ability to place cubes
 - [x] Add background grid
 - [x] Add fullscreen
-- [x] Add * dramatic music * "Rectangle of Death(ROD)" 
+- [ ] Add * dramatic music * 
 - [x] Add better graphics rendering
 - [x] Add Death
 - [x] Add Minimap
