@@ -5,6 +5,7 @@
 <script>
 var me={};
 var mp;
+var Mass;
 Array.prototype.sortBy = function(p) {
   return this.slice(0).sort(function(a,b) {
     return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
@@ -35,7 +36,7 @@ Array.prototype.sortBy = function(p) {
       var me={};
       var info;
       var Boxs;
-      var gamesize=2300;
+      var gamesize=4300;
       var gamesize2=gamesize*2;
       var winx=window.innerWidth/2;
       var winy=window.innerHeight/2;
@@ -94,7 +95,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         ctx.fillRect(0-me.xoff+windx-25,0,5,gamesize);
         ctx.fillRect(gamesize-me.xoff+windx,0,5,gamesize);
         ctx.fillRect(0,gamesize-me.yoff+windy,gamesize2,5);
-
+roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey","black");
       ctx.strokeStyle="black";
       for(var i = 0 ; i < Boxes.length; i++) {
         if(Boxes[i].owner == qs["name"]) {
@@ -106,6 +107,10 @@ function drawStuff(winx2,winy2,windx2,windy2) {
       } else {
         roundRect(Boxes[i].x-me.xoff+windx,Boxes[i].y-me.yoff+windy,15,15,5,"round","red","#c90000");
       }
+      }
+
+      for(var i = 0 ; i < Mass.length; i++) {
+        roundRect(Mass[i].x-me.xoff+windx,Mass[i].y-me.yoff+windy,15,15,5,"round","yellow","#c90000");
       }
 
       for(var i in info){
@@ -144,7 +149,6 @@ function drawStuff(winx2,winy2,windx2,windy2) {
       catch(err) {
 
       }
-      roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey","black");
         for(var i = 0 ; i < data.length; i++) {
           ctx.fillStyle="black";
           if(info[i].name == qs["name"]) {
@@ -155,14 +159,17 @@ function drawStuff(winx2,winy2,windx2,windy2) {
             ctx.font = '20px Arial';
             ctx.fillText("You",locx-40,locy-40);
             roundRect(locx-40,locy-40,30,30,7,"round","grey","black");
-            roundRect(window.innerWidth-260+info[i].x/10,window.innerHeight-260+info[i].y/10,5,5,.5,"round","green","black");
+            roundRect(window.innerWidth-250+info[i].x/20,window.innerHeight-250+info[i].y/20,5,5,.5,"round","green","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20);
             roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","red","black");
-            roundRect(window.innerWidth-260+info[i].x/10,window.innerHeight-260+info[i].y/10,5,5,.5,"round","red","black");
+            roundRect(window.innerWidth-250+info[i].x/20,window.innerHeight-250+info[i].y/20,5,5,.5,"round","red","black");
             }
         }
-
+        for(var i = 0 ; i < Mass.length; i++) {
+          roundRect(Mass[i].x-me.xoff+windx,Mass[i].y-me.yoff+windy,15,15,5,"round","yellow","#c90000");
+          roundRect(Mass[i].x-me.xoff+windx-20,Mass[i].y-me.yoff+windy-20,30,30,7,"round","Yellow","black");
+        }
 
     });
     socket.on('adminRequest', function (data) {
@@ -173,6 +180,11 @@ function drawStuff(winx2,winy2,windx2,windy2) {
   });
    socket.on('Boxes',function(data){
      Boxes = data;
+
+   });
+   socket.on('MASS',function(data){
+     Mass = data;
+     console.log(data);
 
    });
    socket.on('adminRequest', function (data) {
@@ -203,7 +215,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
             socket.emit('keyPress',{inputId:'up',state:false});
     }
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    var dfgd = false;
+    var pinkfluffyunicornsdancingonrainbows = false;
 if (window.DeviceMotionEvent != undefined && iOS) {
 	window.ondevicemotion = function(e) {
 		if (e.accelerationIncludingGravity.x>2) {
@@ -234,15 +246,15 @@ if (window.DeviceMotionEvent != undefined && iOS) {
 		}
 	}
   document.addEventListener('touchstart',function(e) {
-    if (dfgd==false) {
+    if (pinkfluffyunicornsdancingonrainbows==false) {
       socket.emit('Space',"Clicked");
-      dfgd=true;
-      
+      pinkfluffyunicornsdancingonrainbows=true;
+
       }
    });
    document.addEventListener('touchend',function(e) {
-     if (dfgd==true) {
-       dfgd=false;
+     if (pinkfluffyunicornsdancingonrainbows==true) {
+       pinkfluffyunicornsdancingonrainbows=false;
        }
     });
 } else {

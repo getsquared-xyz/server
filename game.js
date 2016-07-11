@@ -20,7 +20,9 @@ var z;
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
-var gamesize=2300;
+var MASSYSQUARES={};
+var MASSYSQUARESCAP=100;
+var gamesize=4300;
 
 var Player = function(id){
 	var xr=Math.floor((Math.random() * gamesize-1) + 1);
@@ -71,6 +73,16 @@ var Player = function(id){
             self.yoff += self.maxSpd;
 					}
 						}
+    }
+    return self;
+}
+var MS = function(){
+    var self = {
+        x:Math.floor((Math.random() * gamesize-1) + 1),
+        y:Math.floor((Math.random() * gamesize-1) + 1),
+        points:10,
+				w:15,
+				h:15,
     }
     return self;
 }
@@ -254,6 +266,13 @@ function runCollisionText() {
 	}
 }
 setInterval(function(){
+	if (true) {
+		s = Math.random();
+		var box = MS();
+		MASSYSQUARES[s] = box;
+	}
+},1000);
+setInterval(function(){
 	for(var i in PLAYER_LIST){
 		var player = PLAYER_LIST[i];
 		if (player.inv > 0) {
@@ -285,6 +304,19 @@ setInterval(function(){
 },1000);
 setInterval(function(){
 	runCollisionText();
+	var pack = [];
+	for(var i in MASSYSQUARES){
+			var box = MASSYSQUARES[i];
+			pack.push({
+					x:box.x,
+					y:box.y,
+			});
+	}
+	for(var i in SOCKET_LIST){
+			var socket = SOCKET_LIST[i];
+			console.log(pack)
+			socket.emit('MASS',pack);
+	}
 	var pack = [];
 	for(var i in BOXES){
 			var box = BOXES[i];
