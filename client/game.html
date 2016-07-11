@@ -205,7 +205,7 @@ roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey",
             socket.emit('keyPress',{inputId:'up',state:false});
     }
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    var dfgd = false;
+    var pinkfluffyunicornsdancingonrainbows = false;
 if (window.DeviceMotionEvent != undefined && iOS) {
 	window.ondevicemotion = function(e) {
 		if (e.accelerationIncludingGravity.x>2) {
@@ -236,15 +236,15 @@ if (window.DeviceMotionEvent != undefined && iOS) {
 		}
 	}
   document.addEventListener('touchstart',function(e) {
-    if (dfgd==false) {
+    if (pinkfluffyunicornsdancingonrainbows==false) {
       socket.emit('Space',"Clicked");
-      dfgd=true;
-      
+      pinkfluffyunicornsdancingonrainbows=true;
+
       }
    });
    document.addEventListener('touchend',function(e) {
-     if (dfgd==true) {
-       dfgd=false;
+     if (pinkfluffyunicornsdancingonrainbows==true) {
+       pinkfluffyunicornsdancingonrainbows=false;
        }
     });
 } else {
