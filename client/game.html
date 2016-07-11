@@ -111,7 +111,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
       }
 
       for(var i = 0 ; i < Mass.length; i++) {
-        roundRect(Mass[i].x-me.xoff+windx,Mass[i].y-me.yoff+windy,15,15,5,"round","yellow","#c90000");
+        roundRect(window.innerWidth-250+Mass[i].x/20,window.innerHeight-250+Mass[i].y/20,5,5,.5,"round","yellow","#c90000");
       }
 
       for(var i in info){
@@ -169,8 +169,8 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
             }
         }
         for(var i = 0 ; i < Mass.length; i++) {
-          roundRect(Mass[i].x-me.xoff+windx,Mass[i].y-me.yoff+windy,15,15,5,"round","yellow","#c90000");
-          roundRect(Mass[i].x-me.xoff+windx-20,Mass[i].y-me.yoff+windy-20,30,30,7,"round","Yellow","black");
+
+          roundRect(Mass[i].x-me.xoff+windx-20,Mass[i].y-me.yoff+windy-20,15,15,7,"round","Yellow","black");
         }
 
     });

@@ -5,18 +5,19 @@ The official getsquared.xyz server stuff repo
 - [x] Add ability to place cubes
 - [x] Add background grid
 - [x] Add fullscreen
-- [ ] Add * dramatic music * 
+- [x] Add * dramatic music * "Rectangle of Death(ROD)" 
 - [x] Add better graphics rendering
 - [x] Add Death
-- [x] Add Minimap
-- [x] Add points and leaderboard
-- [x] Add random spawning point
-- [ ] Add powerups *On Hold*
+<<<<<<< HEAD
+- [ ] Add Minimap *On Hold*
+=======
+- [x] Add Minimap *On Hold*
+>>>>>>> origin/master
+- [x] Add points and leaderboard (Not that anyone will ever get on it) *In Progress*
+- [x] Add random spawning point *On Hold*
 - [ ] Add server status *On Hold*
 - [ ] Add dummy squares *On Hold*
 - [ ] Add dramatic music *Never*
-- [x] Add start invincibilty
-- [ ] One page design with server transfer multiple rooms and *moar* *On Hold*
-- [x] Add Ads
-
-#All code posted here is owned by getsquared.xyz and can not be removed except by owners permission.
+- [x] Add start invincibilty *On Hold*
+- [ ] One page design with server transfer multiple rooms and *moar*
+- [x] Add Ads *On Hold till we become popular*
