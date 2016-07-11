@@ -1,0 +1,19 @@
+.msdos {
+  font-family:Courier;
+ color: #CCCCCC;
+  background: #000000;
+  border: 3px double #CCCCCC;
+  padding: 10px;
+}
+
+.greenletters {
+  font-family:Courier;
+ color: #15D43B;
+  background: #000000;
+  border: 3px double #CCCCCC;
+  padding: 10px;
+}
+
+body {
+  background-color: #000000;
+}

@@ -10,7 +10,7 @@ app.get('/game',function(req, res) {
     res.sendFile(__dirname + '/client/game.html');
 });
 app.get('/style',function(req, res) {
-    res.sendFile(__dirname + '/client/style.css');
+    res.sendFile(__dirname + '/client/commandprompt.css');
 });
 serv.listen(2000);
 console.log("Server started.");
@@ -20,9 +20,13 @@ var z;
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
+<<<<<<< HEAD
 var MASSYSQUARES={};
 var MASSYSQUARESCAP=100;
 var gamesize=4300;
+=======
+var gamesize=23000;
+>>>>>>> origin/master
 
 var Player = function(id){
 	var xr=Math.floor((Math.random() * gamesize-1) + 1);
@@ -43,7 +47,6 @@ var Player = function(id){
 				name:"",
 				inv:1,
 				box1Count:0,
-				box2Count:0,
 				points:30,
     }
     self.updatePosition = function(){
@@ -115,18 +118,11 @@ io.sockets.on('connection', function(socket){
     });
 		socket.on('Space',function(){
 			if (PLAYER_LIST[socket.id].box1Count<2) {
+				var player = PLAYER_LIST[socket.id];
 				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
+		    var box = Boxes(PLAYER_LIST[socket.id].x-(player.w*0.75),PLAYER_LIST[socket.id].y-(player.h*0.50),PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
 		    BOXES[s] = box;
 				PLAYER_LIST[socket.id].box1Count++;
-				}
-    });
-		socket.on('B',function(){
-			if (PLAYER_LIST[socket.id].box2Count<2) {
-				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"2",PLAYER_LIST[socket.id].id+2);
-		    BOXES[s] = box;
-				PLAYER_LIST[socket.id].box2Count++;
 				}
     });
 			socket.on("name",function(name){
@@ -203,7 +199,8 @@ function intersectRect(rect1, rect2) {
 	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x,rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
 		var player = PLAYER_LIST[findID(rect2.owner)];
-		player.points=Math.floor(player.points+(rect1.points*0.75));
+		rand=Math.floor((Math.random() * 1) + 0.5);
+		player.points=Math.floor(player.points+(rect1.points*rand));
 		socket.emit('dead', {name:rect1.name,server:"http://jade.getsquared.xyz",killer:rect2.owner,points:rect1.points});
 		delete SOCKET_LIST[findID(rect1.name)];
 		delete PLAYER_LIST[findID(rect1.name)];
@@ -344,7 +341,7 @@ setInterval(function(){
             number:player.number,
 						name:player.name,
 						id:player.id,
-						points:player.points
+						points:player.points,
         });
     }
     for(var i in SOCKET_LIST){
