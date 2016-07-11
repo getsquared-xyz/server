@@ -21,12 +21,15 @@ var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
 var gamesize=2300;
+
 var Player = function(id){
+	var xr=Math.floor((Math.random() * gamesize-1) + 1);
+	var yr=Math.floor((Math.random() * gamesize-1) + 1);
     var self = {
-        x:250,
-        y:250,
-        xoff:0,
-        yoff:0,
+        x:xr,
+        y:yr,
+        xoff:xr-261,
+        yoff:yr-251,
         id:id,
 				w:30,
 				h:30,
@@ -36,7 +39,7 @@ var Player = function(id){
         pressingDown:false,
         maxSpd:10,
 				name:"",
-				inv:5,
+				inv:1,
 				box1Count:0,
 				box2Count:0,
 				points:30,
@@ -116,7 +119,7 @@ io.sockets.on('connection', function(socket){
     });
 			socket.on("name",function(name){
 	      used=false;
-	      if (name!=="" && name.length < 11 && isValid(name)) {
+	      if (name!=="" && name.length < 21 && isValid(name)) {
 	        for(var i in PLAYER_LIST){
 	          var player = PLAYER_LIST[i];
 	          if (player.name==name) {
@@ -185,10 +188,10 @@ function intersects(a, b) {
 }
 //isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x+(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)
 function intersectRect(rect1, rect2) {
-	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x+(rect1.w/2),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)) {
+	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x,rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
 		var player = PLAYER_LIST[findID(rect2.owner)];
-		player.points=Math.floor(player.points+(rect1.points/2));
+		player.points=Math.floor(player.points+(rect1.points*0.75));
 		socket.emit('dead', {name:rect1.name,server:"http://jade.getsquared.xyz",killer:rect2.owner,points:rect1.points});
 		delete SOCKET_LIST[findID(rect1.name)];
 		delete PLAYER_LIST[findID(rect1.name)];
