@@ -1,5 +1,5 @@
-# Squared.io
-The official squared.io server stuff repo
+# getsquared.xyz
+The official getsquared.xyz server stuff repo
 #TODO
 - [x] Add scrolling
 - [x] Add ability to place cubes
@@ -8,7 +8,7 @@ The official squared.io server stuff repo
 - [x] Add * dramatic music * "Rectangle of Death(ROD)" 
 - [x] Add better graphics rendering
 - [x] Add Death
-- [ ] Add Minimap *On Hold*
+- [x] Add Minimap *On Hold*
 - [x] Add points and leaderboard (Not that anyone will ever get on it) *In Progress*
 - [x] Add random spawning point *On Hold*
 - [ ] Add server status *On Hold*
