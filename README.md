@@ -11,7 +11,7 @@ The official getsquared.xyz server stuff repo
 - [x] Add Minimap
 - [x] Add points and leaderboard
 - [x] Add random spawning point
-- [ ] Add powerups
+- [ ] Add powerups *On Hold*
 - [ ] Add server status *On Hold*
 - [ ] Add dummy squares *On Hold*
 - [ ] Add dramatic music *Never*
