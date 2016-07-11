@@ -19,3 +19,4 @@ The official getsquared.xyz server stuff repo
 - [ ] One page design with server transfer multiple rooms and *moar* *On Hold*
 - [x] Add Ads
 
+#All code posted here is owned by getsquared.xyz
