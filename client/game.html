@@ -5,6 +5,7 @@
 <script>
 var me={};
 var mp;
+var ray = new Audio('/client/ray.mp3');
 Array.prototype.sortBy = function(p) {
   return this.slice(0).sort(function(a,b) {
     return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
@@ -124,6 +125,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
             }
           }
           ctx.fillRect(b[0].x-me.xoff+windx,b[1].y-me.yoff+windy,b[1].x-b[0].x+15,b[0].y-b[1].y+15);
+          ray.play();
         }
         catch(err) {
         }
