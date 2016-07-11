@@ -183,7 +183,8 @@ function intersectRect(rect1, rect2) {
 	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x,rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
 		var player = PLAYER_LIST[findID(rect2.owner)];
-		player.points=Math.floor(player.points+(rect1.points*0.75));
+		rand=Math.random();
+		player.points=Math.floor(player.points+(rect1.points*rand));
 		socket.emit('dead', {name:rect1.name,server:"http://jade.getsquared.xyz",killer:rect2.owner,points:rect1.points});
 		delete SOCKET_LIST[findID(rect1.name)];
 		delete PLAYER_LIST[findID(rect1.name)];
