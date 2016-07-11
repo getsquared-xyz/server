@@ -103,8 +103,9 @@ io.sockets.on('connection', function(socket){
     });
 		socket.on('Space',function(){
 			if (PLAYER_LIST[socket.id].box1Count<2) {
+				var player = PLAYER_LIST[socket.id];
 				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
+		    var box = Boxes(PLAYER_LIST[socket.id].x-(player.w*0.75),PLAYER_LIST[socket.id].y-(player.h*0.50),PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
 		    BOXES[s] = box;
 				PLAYER_LIST[socket.id].box1Count++;
 				}
