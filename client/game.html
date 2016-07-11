@@ -156,7 +156,8 @@ function drawStuff(winx2,winy2,windx2,windy2) {
             ctx.font = '20px Arial';
             ctx.fillText("You",locx-40,locy-40);
             roundRect(locx-40,locy-40,30,30,7,"round","grey","black");
-
+            roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey","black");
+            roundRect(window.innerWidth-260+info[i].x/10,window.innerHeight-260+info[i].y/10,5,5,.5,"round","green","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20);
             roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","red","black");
