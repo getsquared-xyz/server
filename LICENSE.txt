@@ -5,7 +5,7 @@ SECTION 2
 Owner(s):
 Hampton Moore, Austin Hitt, Ron Friedman
 Contributor(s)
-[list any who wrote any code whose origin lies in this script/project]
+Hampton Moore, Austin Hitt, Ron Friedman
 SECTION 3 (optional)
 [list extra permissions as stated by owners]
 License created and maintained by BKFighter (2016). License open source. Please mark all modifications of license to users.
