@@ -41,7 +41,6 @@ var Player = function(id){
 				name:"",
 				inv:1,
 				box1Count:0,
-				box2Count:0,
 				points:30,
     }
     self.updatePosition = function(){
@@ -108,14 +107,6 @@ io.sockets.on('connection', function(socket){
 		    var box = Boxes(PLAYER_LIST[socket.id].x-(player.w*0.75),PLAYER_LIST[socket.id].y-(player.h*0.50),PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
 		    BOXES[s] = box;
 				PLAYER_LIST[socket.id].box1Count++;
-				}
-    });
-		socket.on('B',function(){
-			if (PLAYER_LIST[socket.id].box2Count<2) {
-				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"2",PLAYER_LIST[socket.id].id+2);
-		    BOXES[s] = box;
-				PLAYER_LIST[socket.id].box2Count++;
 				}
     });
 			socket.on("name",function(name){
@@ -313,7 +304,7 @@ setInterval(function(){
             number:player.number,
 						name:player.name,
 						id:player.id,
-						points:player.points
+						points:player.points,
         });
     }
     for(var i in SOCKET_LIST){
