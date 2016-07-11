@@ -124,6 +124,9 @@ function drawStuff(winx2,winy2,windx2,windy2) {
             }
           }
           ctx.fillRect(b[0].x-me.xoff+windx,b[1].y-me.yoff+windy,b[1].x-b[0].x+15,b[0].y-b[1].y+15);
+          h=b[1].x-b[0].x+15;
+          w=b[0].y-b[1].y+15;
+          roundRect(window.innerWidth-260+b[0].x/10,window.innerHeight-260+b[1].y/10,h/10,w/10,0,"round","red","black");
         }
         catch(err) {
         }
