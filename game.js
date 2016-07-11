@@ -20,13 +20,9 @@ var z;
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
-<<<<<<< HEAD
 var MASSYSQUARES={};
 var MASSYSQUARESCAP=100;
 var gamesize=4300;
-=======
-var gamesize=23000;
->>>>>>> origin/master
 
 var Player = function(id){
 	var xr=Math.floor((Math.random() * gamesize-1) + 1);

@@ -5,11 +5,8 @@
 <script>
 var me={};
 var mp;
-<<<<<<< HEAD
+
 var Mass;
-=======
-var ray = new Audio('/client/ray.mp3');
->>>>>>> origin/master
 Array.prototype.sortBy = function(p) {
   return this.slice(0).sort(function(a,b) {
     return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
@@ -99,11 +96,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         ctx.fillRect(0-me.xoff+windx-25,0,5,gamesize);
         ctx.fillRect(gamesize-me.xoff+windx,0,5,gamesize);
         ctx.fillRect(0,gamesize-me.yoff+windy,gamesize2,5);
-<<<<<<< HEAD
-roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey","black");
-=======
 roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey","black");
->>>>>>> origin/master
       ctx.strokeStyle="black";
       for(var i = 0 ; i < Boxes.length; i++) {
         if(Boxes[i].owner == qs["name"]) {
