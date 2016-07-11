@@ -18,5 +18,5 @@ The official getsquared.xyz server stuff repo
 - [x] Add start invincibilty
 - [ ] One page design with server transfer multiple rooms and *moar* *On Hold*
 - [x] Add Ads
-- [] KYS
+- [ ] KYS
 
