@@ -20,7 +20,7 @@ var z;
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var BOXES={};
-var gamesize=2300;
+var gamesize=23000;
 
 var Player = function(id){
 	var xr=Math.floor((Math.random() * gamesize-1) + 1);
