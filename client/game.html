@@ -35,7 +35,7 @@ Array.prototype.sortBy = function(p) {
       var me={};
       var info;
       var Boxs;
-      var gamesize=23000;
+      var gamesize=4300;
       var gamesize2=gamesize*2;
       var winx=window.innerWidth/2;
       var winy=window.innerHeight/2;
@@ -157,11 +157,11 @@ roundRect(window.innerWidth-260,window.innerHeight-260,235,235,5,"round","grey",
             ctx.font = '20px Arial';
             ctx.fillText("You",locx-40,locy-40);
             roundRect(locx-40,locy-40,30,30,7,"round","grey","black");
-            roundRect(window.innerWidth-260+info[i].x/100,window.innerHeight-260+info[i].y/100,5,5,.5,"round","green","black");
+            roundRect(window.innerWidth-260+info[i].x/10,window.innerHeight-260+info[i].y/10,5,5,.5,"round","green","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20);
             roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","red","black");
-            roundRect(window.innerWidth-260+info[i].x/100,window.innerHeight-260+info[i].y/100,5,5,.5,"round","red","black");
+            roundRect(window.innerWidth-260+info[i].x/10,window.innerHeight-260+info[i].y/10,5,5,.5,"round","red","black");
             }
         }
 
