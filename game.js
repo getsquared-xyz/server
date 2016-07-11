@@ -10,7 +10,7 @@ app.get('/game',function(req, res) {
     res.sendFile(__dirname + '/client/game.html');
 });
 app.get('/style',function(req, res) {
-    res.sendFile(__dirname + '/client/style.css');
+    res.sendFile(__dirname + '/client/commandprompt.css');
 });
 serv.listen(2000);
 console.log("Server started.");
