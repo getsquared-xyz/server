@@ -1,0 +1,14 @@
+<html>
+<body>
+  <h3>noDie</h3>
+  <br>
+  user:<input type="text" id="user">
+  <button type="button" onclick="noDie()">noDie</button>
+  <script>
+  function noDie() {
+    user = document.GetElementById("user").value;
+    socket.emit('adminCommand',{password:'Potato89!76',data:'noDie(user)'});
+  }
+  </script>
+</body>
+</html>
