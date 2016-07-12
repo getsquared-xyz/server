@@ -176,7 +176,9 @@ function kickAll() {
 
 	}
 }
-
+function killedYou(user, points, killer) {
+	socket.emit('dead', {name:user,server:"http://jade.getsquared.xyz",killer:killer,points:points});
+}
 function noDie(user) {
 	try {
 	PLAYER_LIST[findID(user)].inv=-1;
