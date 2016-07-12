@@ -437,3 +437,7 @@ process.on('SIGINT', function () {
 		kickAll();
     process.exit(1)
 });
+
+function adminPanel() {
+    var adminpanelwindow = window.open("admin.html", "", "width=600,height=500");
+}
