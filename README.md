@@ -11,7 +11,6 @@ The official getsquared.xyz server stuff repo
 - [x] Add Minimap
 - [x] Add points and leaderboard
 - [x] Add random spawning point
-- [ ] Add server status *On Hold*
 - [x] Add dummy squares
 - [x] Add start invincibilty *On Hold*
 - [ ] One page design with server transfer multiple rooms and *moar*
