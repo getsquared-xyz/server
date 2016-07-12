@@ -1,6 +1,6 @@
 {
   "name": "getsquared",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "getsquared server",
   "main": "game.js",
   "scripts": {
