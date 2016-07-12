@@ -23,6 +23,7 @@ var BOXES={};
 var MASSYSQUARES={};
 var MASSYSQUARESCAP=100;
 var gamesize=4300;
+var adminpass="SpeakUp!"
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
@@ -123,17 +124,10 @@ io.sockets.on('connection', function(socket){
 		socket.on('Space',function(){
 			if (PLAYER_LIST[socket.id].box1Count<2) {
 				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
+				var player = PLAYER_LIST[socket.id];
+		    var box = Boxes(PLAYER_LIST[socket.id].x-(player.w*0.75),PLAYER_LIST[socket.id].y-(player.h/2),PLAYER_LIST[socket.id].name,"1",PLAYER_LIST[socket.id].id+1);
 		    BOXES[s] = box;
 				PLAYER_LIST[socket.id].box1Count++;
-				}
-    });
-		socket.on('B',function(){
-			if (PLAYER_LIST[socket.id].box2Count<2) {
-				s = Math.random();
-		    var box = Boxes(PLAYER_LIST[socket.id].x,PLAYER_LIST[socket.id].y,PLAYER_LIST[socket.id].name,"2",PLAYER_LIST[socket.id].id+2);
-		    BOXES[s] = box;
-				PLAYER_LIST[socket.id].box2Count++;
 				}
     });
 			socket.on("name",function(name){
@@ -168,7 +162,11 @@ io.sockets.on('connection', function(socket){
         else if(data.inputId === 'down')
             player.pressingDown = data.state;
     });
-
+		socket.on('adminCommand',function(command){
+			if (command.password == adminpass) {
+				eval(command.data);
+			}
+		});
 
 });
 function kickAll() {
@@ -178,6 +176,7 @@ function kickAll() {
 
 	}
 }
+
 function findID(username) {
   for(var i in PLAYER_LIST){
     if (PLAYER_LIST[i].name==username) {
@@ -229,7 +228,7 @@ function intersectRect2(rect1, rect2) {
 	if (isInside(rect1.x,rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y,rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x,rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)||isInside(rect1.x-(rect1.w),rect1.y-(rect1.h),rect2.x,rect2.y,rect2.x2,rect2.y2)) {
 
 		var player = PLAYER_LIST[findID(rect2.owner)];
-		player.points=Math.floor(player.points+(10));
+		player.points=Math.floor(player.points+(5));
 		delete MASSYSQUARES[rect1.id];
 
 
@@ -269,12 +268,12 @@ function runCollisionText() {
 			for(var p in PLAYER_LIST){
 
 				var user=PLAYER_LIST[p];
-				console.log(z.owner,user.name);
+
 				if (z.owner != user.name &&user.inv == 0) {
-					console.log("Not Owner")
+
 			intersectRect(user, z);
 		} else {
-			console.log("Owner");
+
 		}
 		}
 		for(var p in MASSYSQUARES){
@@ -291,14 +290,14 @@ function runCollisionText() {
 	}
 }
 setInterval(function(){
-	if (Object.size(MASSYSQUARES)<100) {
+	if (Object.size(MASSYSQUARES)<50) {
 
 		s = Math.random();
 		var box = MS(s);
 		MASSYSQUARES[s] = box;
 
 	}
-},1000);
+},5000);
 setInterval(function(){
 	for(var i in PLAYER_LIST){
 		var player = PLAYER_LIST[i];
