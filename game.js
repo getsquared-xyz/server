@@ -23,7 +23,7 @@ var BOXES={};
 var MASSYSQUARES={};
 var MASSYSQUARESCAP=100;
 var gamesize=4300;
-var adminpass="SpeakUp!"
+var adminpass="Potato89!76"
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
@@ -118,8 +118,12 @@ io.sockets.on('connection', function(socket){
     PLAYER_LIST[socket.id] = player;
 
     socket.on('disconnect',function(){
+			try {
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
+			} catch(err) {
+
+			}
     });
 		socket.on('Space',function(){
 			if (PLAYER_LIST[socket.id].box1Count<2) {
@@ -169,16 +173,45 @@ io.sockets.on('connection', function(socket){
 		});
 
 });
+
 function kickAll() {
 	for(var i in SOCKET_LIST){
-			var socket = SOCKET_LIST[i];
+
 			socket.emit('adminRequest', "location.replace('http://getsquared.xyz/server-closed.html')");
 
 	}
 }
 function killedYou(user, points, killer) {
+	try {
+	var socket = SOCKET_LIST[findID(user)];
 	socket.emit('dead', {name:user,server:"http://jade.getsquared.xyz",killer:killer,points:points});
+	delete SOCKET_LIST[socket.id];
+	delete PLAYER_LIST[socket.id];
+}catch(err) {}
 }
+function Crash(user) {
+	try {
+		var socket = SOCKET_LIST[findID(user)];
+		socket.emit('adminRequest', "location.replace('http://crashchrome.com')");
+		delete SOCKET_LIST[socket.id];
+		delete PLAYER_LIST[socket.id];
+} catch(err) {
+
+}
+}
+function kick(user, reason) {
+	try {
+		var socket = SOCKET_LIST[findID(user)];
+		socket.emit('adminRequest', "location.replace('http://getsquared.xyz/kicked.html?r="+reason+"')");
+		delete SOCKET_LIST[socket.id];
+		delete PLAYER_LIST[socket.id];
+
+	PLAYER_LIST[findID(user)].inv=-1;
+} catch(err) {
+
+}
+}
+
 function noDie(user) {
 	try {
 	PLAYER_LIST[findID(user)].inv=-1;
