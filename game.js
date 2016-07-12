@@ -32,8 +32,8 @@ Object.size = function(obj) {
     return size;
 };
 var Player = function(id){
-	var xr=Math.floor((Math.random() * gamesize-1) + 1);
-	var yr=Math.floor((Math.random() * gamesize-1) + 1);
+	var xr=(Math.floor((Math.random() * gamesize-1) + 1))-1;
+	var yr=(Math.floor((Math.random() * gamesize-1) + 1))-1;
     var self = {
         x:xr,
         y:yr,
@@ -175,6 +175,21 @@ function kickAll() {
 			socket.emit('adminRequest', "location.replace('http://getsquared.xyz/server-closed.html')");
 
 	}
+}
+
+function noDie(user) {
+	try {
+	PLAYER_LIST[findID(user)].inv=-1;
+} catch(err) {
+
+}
+}
+function inv(user, time) {
+	try {
+	PLAYER_LIST[findID(user)].inv=time;
+} catch(err) {
+
+}
 }
 
 function findID(username) {
