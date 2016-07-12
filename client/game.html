@@ -149,6 +149,20 @@ code {
 }
 </style>
 </head>
+<body>
+<input type='radio' name='opts' class="invisible" id='one' />
+<input type='radio' name='opts' class="invisible" id='two' />
+<!-- Navigation bar -->
+<div class="navbar">
+        <hr>
+        <label for="one"><strong>CSS Router</strong></label>
+        <label for="two">Getting Started</label>
+</div>
+
+<!-- Content for pages -->
+<main role="main" class="main-content">
+  <section class="menu one">
+    <div class="content">
 <center>
 <canvas id="canvas" style="border:1px solid #000000;"></canvas>
 </center>
@@ -434,3 +448,11 @@ function adminPanel() {
     var adminpanelwindow = window.open("admin.html", "", "width=600,height=500");
 }
 </script>
+</div>
+</section>
+<section class="menu two">
+    <div class="content">
+    	
+    	</script>
+    </div>
+  </section>
