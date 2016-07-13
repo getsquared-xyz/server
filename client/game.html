@@ -5,6 +5,7 @@
 <script>
 var me={};
 var mp;
+var version = "0.9";
 
 var Mass;
 Array.prototype.sortBy = function(p) {
@@ -281,5 +282,9 @@ function roundRect(x,y,w,h,cr,join,color,outcolor){
 
 function adminPanel() {
     var adminpanelwindow = window.open("admin.html", "", "width=600,height=500");
+}
+function version() {
+	console.log("Version is: " + version);
+	return version;
 }
 </script>
