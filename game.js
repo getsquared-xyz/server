@@ -1,7 +1,9 @@
 var express = require('express');
 var app = express();
 var serv = require('http').Server(app);
-
+app.get('/online',function(req, res) {
+	res.send("Online!")
+});
 app.get('/',function(req, res) {
 	res.sendFile(__dirname + '/client/index.html');
 });
