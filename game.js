@@ -4,8 +4,9 @@ var number;
 var serv = require('http').Server(app);
 app.get('/online',function(req, res) {
 	res.header('Access-Control-Allow-Origin', '*');
-	res.send("Online! Players: " + number);
+	res.send('{"Online":"Online", "Players":"'+Object.size(PLAYER_LIST)+'"}');
 });
+
 app.get('/',function(req, res) {
 	res.sendFile(__dirname + '/client/index.html');
 });
@@ -431,7 +432,6 @@ setInterval(function(){
         socket.emit('newPositions',pack);
     }
 
-number = PLAYER_LIST.length;
 
 },1000/25);
 process.on('SIGINT', function () {
