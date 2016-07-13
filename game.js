@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var players;
+var number;
 var serv = require('http').Server(app);
 app.get('/online',function(req, res) {
 	res.header('Access-Control-Allow-Origin', '*');
@@ -431,7 +431,7 @@ setInterval(function(){
         socket.emit('newPositions',pack);
     }
 
-number = PLAYER_LIST.length
+number = PLAYER_LIST.length;
 
 },1000/25);
 process.on('SIGINT', function () {
