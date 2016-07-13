@@ -1,9 +1,10 @@
 var express = require('express');
 var app = express();
+var players;
 var serv = require('http').Server(app);
 app.get('/online',function(req, res) {
 	res.header('Access-Control-Allow-Origin', '*');
-	res.send("Online!");
+	res.send("Online! Players: " + number);
 });
 app.get('/',function(req, res) {
 	res.sendFile(__dirname + '/client/index.html');
@@ -119,7 +120,6 @@ io.sockets.on('connection', function(socket){
 
     var player = Player(socket.id);
     PLAYER_LIST[socket.id] = player;
-
     socket.on('disconnect',function(){
 			try {
         delete SOCKET_LIST[socket.id];
@@ -431,8 +431,7 @@ setInterval(function(){
         socket.emit('newPositions',pack);
     }
 
-
-
+number = PLAYER_LIST.length
 
 },1000/25);
 process.on('SIGINT', function () {
