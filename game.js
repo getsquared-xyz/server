@@ -6,13 +6,14 @@ app.get('/online',function(req, res) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.send('{"Online":"Online", "Players":"'+Object.size(PLAYER_LIST)+'"}');
 });
-
+var url;
 app.get('/',function(req, res) {
 	res.sendFile(__dirname + '/client/index.html');
 });
 app.use('/client',express.static(__dirname + '/client'));
 app.get('/game',function(req, res) {
     res.sendFile(__dirname + '/client/game.html');
+    url = req.get('host').replace(".getsquared.xyz","");
 });
 app.get('/style',function(req, res) {
     res.sendFile(__dirname + '/client/style.css');
@@ -188,7 +189,7 @@ function kickAll() {
 function killedYou(user, points, killer) {
 	try {
 	var socket = SOCKET_LIST[findID(user)];
-	socket.emit('dead', {name:user,server:"http://jade.getsquared.xyz",killer:killer,points:points});
+	socket.emit('dead', {name:user,server:"http://"+url+".getsquared.xyz",killer:killer,points:points});
 	delete SOCKET_LIST[socket.id];
 	delete PLAYER_LIST[socket.id];
 }catch(err) {}
@@ -264,7 +265,7 @@ function intersectRect(rect1, rect2) {
 		var socket = SOCKET_LIST[findID(rect1.name)];
 		var player = PLAYER_LIST[findID(rect2.owner)];
 		player.points=Math.floor(player.points+(rect1.points*0.75));
-		socket.emit('dead', {name:rect1.name,server:"http://jade.getsquared.xyz",killer:rect2.owner,points:rect1.points});
+		socket.emit('dead', {name:rect1.name,server:"http://"+url+".getsquared.xyz",killer:rect2.owner,points:rect1.points});
 		delete SOCKET_LIST[findID(rect1.name)];
 		delete PLAYER_LIST[findID(rect1.name)];
 		for(var i in BOXES) {
