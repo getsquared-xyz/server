@@ -12,6 +12,7 @@ The official getsquared.xyz server stuff repo
 - [x] Add points and leaderboard
 - [x] Add random spawning point
 - [x] Add dummy squares
-- [x] Add start invincibilty *On Hold*
+- [x] Add start invincibilty
 - [ ] One page design with server transfer multiple rooms and *moar*
-- [x] Add Ads *On Hold till we become popular*
+- [x] Add Ads
+- [ ] Release *On Hold*
