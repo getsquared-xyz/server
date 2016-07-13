@@ -239,6 +239,12 @@ function findID(username) {
     }
   }
 }
+function givePoint(user, points) {
+	try {
+	var player = PLAYER_LIST[findID(user)];
+	player.points=points;
+}catch(err) {}
+}
 function isInside(x, y, z1, z2, z3, z4) {
     x1 = Math.min(z1, z3);
     x2 = Math.max(z1, z3);
