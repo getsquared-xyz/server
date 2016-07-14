@@ -29,7 +29,7 @@ var BOXES={};
 var MASSYSQUARES={};
 var MASSYSQUARESCAP=100;
 var gamesize=4300;
-var adminpass="Potato89!76"
+var adminpass="*Password*"
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
