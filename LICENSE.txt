@@ -1,4 +1,4 @@
-The license below is free to use with permission (as is). Please note it is only a template, and you will have to fill in your own info. For this websites license, see the GitHub repository. 
+For this websites license, see the GitHub repository. 
 
 BKFighter Copyright License Template 1.0
 
@@ -10,8 +10,5 @@ Owner(s):
 Hampton Moore, Austin Hitt, Ron Friedman
 Contributor(s):
 Hampton Moore, Austin Hitt, Ron Friedman
-
-SECTION 3 (optional)
-[list extra permissions as stated by owners]
 
 License created and maintained by BKFighter (2016). License free to use and modify, even commercially, with credit to BKFighter. Please mark all modifications of license to users.
