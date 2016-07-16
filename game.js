@@ -156,7 +156,7 @@ io.sockets.on('connection', function(socket) {
                 }
             }
             if (used == false) {
-                PLAYER_LIST[socket.id].name = filter.clean(name);
+                PLAYER_LIST[socket.id].name = name;
             } else {
                 SOCKET_LIST[socket.id].emit('adminRequest', "location.replace('http://getsquared.xyz/');");
             }
