@@ -9,7 +9,7 @@ var badwords = ["fuvg","qvpx","qvpxf","qvpxfhpxre","2t1p","2 tveyf 1 phc","npebg
 function cleanUp(text){
     for(var i = 0; i < badwords.length; i++){
         if(new RegExp(badwords[i]).test(text)){
-            return Array(text.length).join("*");
+            return Array(text.length+1).join("*");
         }
     }
     return text;
