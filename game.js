@@ -18,7 +18,7 @@ function cleanUp(text){
 
 app.get('/online', function(req, res) {
     res.header('Access-Control-Allow-Origin', '*');
-    rFes.send('{"Online":"Online", "Players":"' + Object.size(PLAYER_LIST) + '"}');
+    res.send('{"Online":"Online", "Players":"' + Object.size(PLAYER_LIST) + '"}');
 });
 var url;
 app.get('/', function(req, res) {
