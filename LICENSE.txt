@@ -1,7 +1,3 @@
-For this websites license, see the GitHub repository. 
-
-BKFighter Copyright License Template 1.0
-
 SECTION 1
 The creator(s) of this software, as listed in section 2, permit you to run/execute the following code but without any modifications, except for those from contributors or as permitted by owner. Re-Distribution is strictly not allowed without owners permission. You may also not use any code whose origin lies in this project. (Code used from other programs/scripts may be used as permitted by license of said codes project.) You may not hold owners or contributors at fault for any damages caused by this project/script, monetary or other, as long as script is law abiding.
 
