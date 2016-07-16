@@ -1,16 +1,20 @@
 var express = require('express');
 var app = express();
-var Filter = require('bad-words'),filter = new Filter();
 var serv = require('http').Server(app);
 var number;
 function rot13(s) {
 return s.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
 }
 var badwords = ["fuvg","qvpx","qvpxf","qvpxfhpxre","2t1p","2 tveyf 1 phc","npebgbzbcuvyvn","nynonzn ubg cbpxrg","nynfxna cvcryvar","nany","navyvathf","nahf","ncrfuvg","nefrubyr","nff","nffubyr","nffzhapu","nhgb rebgvp","nhgbrebgvp","onorynaq","onol onggre","onol whvpr","onyy tnt","onyy tenil","onyy xvpxvat","onyy yvpxvat","onyy fnpx","onyy fhpxvat","onatoebf","oneronpx","oneryl yrtny","oneranxrq","onfgneq","onfgneqb","onfgvanqb","ooj","oqfz","ornare","ornaref","ornire pyrnire","ornire yvcf","orfgvnyvgl","ovt oynpx","ovt oernfgf","ovt xabpxref","ovt gvgf","ovzobf","oveqybpx","ovgpu","ovgpurf","oynpx pbpx","oybaqr npgvba","oybaqr ba oybaqr npgvba","oybjwbo","oybj wbo","oybj lbhe ybnq","oyhr jnssyr","oyhzcxva","obyybpxf","obaqntr","obare","obbo","obbof","obbgl pnyy","oebja fubjref","oeharggr npgvba","ohxxnxr","ohyyqlxr","ohyyrg ivor","ohyyfuvg","ohat ubyr","ohatubyr","ohfgl","ohgg","ohggpurrxf","ohggubyr","pnzry gbr","pnztvey","pnzfyhg","pnzjuber","pnecrg zhapure","pnecrgzhapure","pubpbyngr ebfrohqf","pvepyrwrex","pyrirynaq fgrnzre","pyvg","pyvgbevf","pybire pynzcf","pyhfgreshpx","pbpx","pbpxf","pbcebyntavn","pbcebcuvyvn","pbeaubyr","pbba","pbbaf","pernzcvr","phz","phzzvat","phaavyvathf","phag","qnexvr","qngr encr","qngrencr","qrrc guebng","qrrcguebng","qraqebcuvyvn","qvpx","qvyqb","qvatyroreel","qvatyroreevrf","qvegl cvyybjf","qvegl fnapurm","qbttvr fglyr","qbttvrfglyr","qbttl fglyr","qbttlfglyr","qbt fglyr","qbyprgg","qbzvangvba","qbzvangevk","qbzzrf","qbaxrl chapu","qbhoyr qbat","qbhoyr crargengvba","qc npgvba","qel uhzc","qiqn","rng zl nff","rppuv","rwnphyngvba","rebgvp","rebgvfz","rfpbeg","rhahpu","snttbg","srpny","srypu","sryyngvb","srygpu","srznyr fdhvegvat","srzqbz","svttvat","svatreonat","svatrevat","svfgvat","sbbg srgvfu","sbbgwbo","sebggvat","shpx","shpx ohggbaf","shpxva","shpxvat","shpxgneqf","shqtr cnpxre","shqtrcnpxre","shgnanev","tnat onat","tnl frk","travgnyf","tvnag pbpx","tvey ba","tvey ba gbc","tveyf tbar jvyq","tbngpk","tbngfr","tbq qnza","tbxxha","tbyqra fubjre","tbbqcbbc","tbb tvey","tbertnfz","tebcr","tebhc frk","t-fcbg","theb","unaq wbo","unaqwbo","uneq pber","uneqpber","uragnv","ubzbrebgvp","ubaxrl","ubbxre","ubg pney","ubg puvpx","ubj gb xvyy","ubj gb zheqre","uhtr sng","uhzcvat","vaprfg","vagrepbhefr","wnpx bss","wnvy onvg","wnvyonvg","wryyl qbahg","wrex bss","wvtnobb","wvttnobb","wvttreobb","wvmm","whttf","xvxr","xvaonxh","xvaxfgre","xvaxl","xaboovat","yrngure erfgenvag","yrngure fgenvtug wnpxrg","yrzba cnegl","ybyvgn","ybirznxvat","znxr zr pbzr","znyr fdhvegvat","znfgheongr","zrantr n gebvf","zvys","zvffvbanel cbfvgvba","zbgureshpxre","zbhaq bs irahf","ze unaqf","zhss qvire","zhssqvivat","anzoyn","anjnfuv","arteb","arbanmv","avttn","avttre","avt abt","avzcubznavn","avccyr","avccyrf","afsj vzntrf","ahqr","ahqvgl","alzcub","alzcubznavn","bpgbchffl","bzbenfuv","bar phc gjb tveyf","bar thl bar wne","betnfz","betl","cnrqbcuvyr","cnxv","cnagvrf","cnagl","crqborne","crqbcuvyr","crttvat","cravf","cubar frk","cvrpr bs fuvg","cvffvat","cvff cvt","cvffcvt","cynlobl","cyrnfher purfg","cbyr fzbxre","cbalcynl","cbbs","cbba","cbbagnat","chanal","cbbc puhgr","cbbcpuhgr","cbea","cbeab","cbeabtencul","cevapr nyoreg cvrepvat","cgup","chorf","chffl","dhrns","dhrrs","dhvz","enturnq","entvat obare","encr","encvat","encvfg","erpghz","erirefr pbjtvey","evzwbo","evzzvat","ebfl cnyz","ebfl cnyz naq ure 5 fvfgref","ehfgl gebzobar","fnqvfz","fnagbehz","fpng","fpuybat","fpvffbevat","frzra","frk","frkb","frkl","funirq ornire","funirq chffl","furznyr","fuvonev","fuvg","fuvgoyvzc","fuvggl","fubgn","fuevzcvat","fxrrg","fynagrlr","fyhg","f&z","fzhg","fangpu","fabjonyyvat","fbqbzvmr","fbqbzl","fcvp","fcybbtr","fcybbtr zbbfr","fcbbtr","fcernq yrtf","fchax","fgenc ba","fgencba","fgenccnqb","fgevc pyho","fglyr qbttl","fhpx","fhpxf","fhvpvqr tveyf","fhygel jbzra","fjnfgvxn","fjvatre","gnvagrq ybir","gnfgr zl","grn onttvat","guerrfbzr","guebngvat","gvrq hc","gvtug juvgr","gvg","gvgf","gvggvrf","gvggl","gbathr va n","gbcyrff","gbffre","gbjryurnq","genaal","gevonqvfz","gho tvey","ghotvey","ghful","gjng","gjvax","gjvaxvr","gjb tveyf bar phc","haqerffvat","hcfxveg","herguen cynl","hebcuvyvn","intvan","irahf zbhaq","ivoengbe","ivbyrg jnaq","ibenercuvyvn","iblrhe","ihyin","jnax","jrgonpx","jrg qernz","juvgr cbjre","jenccvat zra","jevaxyrq fgnesvfu","kk","kkk","lnbv","lryybj fubjref","lvssl","mbbcuvyvn","🖕"]
-var badwords = badwords.map(function(el){return rot13(el)})
-filter.addWords(badwords);
-
-
+function cleanUp(text){
+    for(var i = 0; i < badwords.length; i++){
+        if(new RegExp(badwords[i]).test(text)){
+            return Array(text.length).join("*");
+        }
+    }
+    return text;
+    
+}
 
 app.get('/online', function(req, res) {
     res.header('Access-Control-Allow-Origin', '*');
