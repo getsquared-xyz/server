@@ -77,28 +77,28 @@ var Player = function(id) {
     self.updatePosition = function() {
         if (self.pressingRight) {
             if (self.x <= gamesize - (self.w / 2)) {
-                self.x += self.maxSpd + self.points / 100;
-                self.xoff += self.maxSpd + self.points / 100;
+                self.x += self.maxSpd;
+                self.xoff += self.maxSpd;
             }
 
         }
         if (self.pressingLeft) {
             if (self.x >= 10) {
-                self.x -= self.maxSpd + self.points / 100;
-                self.xoff -= self.maxSpd + self.points / 100;
+                self.x -= self.maxSpd;
+                self.xoff -= self.maxSpd;
             }
 
         }
         if (self.pressingUp) {
             if (self.y >= 10) {
-                self.y -= self.maxSpd + self.points / 100;
-                self.yoff -= self.maxSpd + self.points / 100;
+                self.y -= self.maxSpd;
+                self.yoff -= self.maxSpd;
             }
         }
         if (self.pressingDown) {
             if (self.y <= gamesize - (self.h / 2)) {
-                self.y += self.maxSpd + self.points / 100;
-                self.yoff += self.maxSpd + self.points / 100;
+                self.y += self.maxSpd;
+                self.yoff += self.maxSpd;
             }
         }
     }
