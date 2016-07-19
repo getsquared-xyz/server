@@ -38,6 +38,7 @@ Array.prototype.sortBy = function(p) {
       var me={};
       var info;
       var Boxs;
+      var name="";
       var gamesize=4300;
       var gamesize2=gamesize*2;
       var winx=window.innerWidth/2;
@@ -68,10 +69,9 @@ function drawStuff(winx2,winy2,windx2,windy2) {
   var windx = windx2;
   var windy = windy2;
     socket.on('newPositions',function(data){
-
       info = data;
       for(var i = 0 ; i < data.length; i++) {
-        if (info[i].name==qs["name"]) {
+        if (info[i].name==name) {
           mp=info[i].points;
           me=info[i];
 
@@ -100,7 +100,7 @@ function drawStuff(winx2,winy2,windx2,windy2) {
 roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey","black");
       ctx.strokeStyle="black";
       for(var i = 0 ; i < Boxes.length; i++) {
-        if(Boxes[i].owner == qs["name"]) {
+        if(Boxes[i].owner == name) {
           if (Boxes[i].type=="1") {
         roundRect(Boxes[i].x-me.xoff+windx,Boxes[i].y-me.yoff+windy,15,15,5,"round","yellow","orange");
       } else if (Boxes[i].type=="2") {
@@ -154,7 +154,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
       }
         for(var i = 0 ; i < data.length; i++) {
           ctx.fillStyle="black";
-          if(info[i].name == qs["name"]) {
+          if(info[i].name == name) {
             locx=window.innerWidth/2
             locy=window.innerHeight/2
             ctx.font = '20px Arial';
@@ -181,13 +181,18 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
    socket.on('dead', function (data) {
       location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server+'&killer='+data.killer+'&points='+data.points)
   });
+  socket.on('myname',function(data){
+    name=data
+
+
+  });
    socket.on('Boxes',function(data){
      Boxes = data;
 
    });
    socket.on('MASS',function(data){
      Mass = data;
-     
+
 
    });
    socket.on('adminRequest', function (data) {
