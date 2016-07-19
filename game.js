@@ -143,8 +143,8 @@ io.sockets.on('connection', function(socket) {
 
     var player = Player(socket.id);
     PLAYER_LIST[socket.id] = player;
-    sendMass(player.name);
-    sendROD(player.name);
+    sendMass(socket.id);
+    sendROD(socket.id);
     socket.on('disconnect', function() {
         try {
             delete SOCKET_LIST[socket.id];
@@ -439,7 +439,7 @@ function sendROD(player) {
       });
   }
   for (var i in SOCKET_LIST) {
-      var socket = SOCKET_LIST[findID(player)];
+      var socket = SOCKET_LIST[player];
       socket.emit('Boxes', pack);
   }
 }
@@ -454,7 +454,7 @@ function sendMass(player) {
   }
 
   for (var i in SOCKET_LIST) {
-      var socket = SOCKET_LIST[findID(player)];
+      var socket = SOCKET_LIST[player];
       socket.emit('MASS', pack);
   }
 }
