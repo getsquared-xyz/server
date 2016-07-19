@@ -187,10 +187,12 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
 
   });
    socket.on('Boxes',function(data){
+     console.log("New Box")
      Boxes = data;
 
    });
    socket.on('MASS',function(data){
+     console.log("New Mass")
      Mass = data;
 
 

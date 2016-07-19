@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var serv = require('http').Server(app);
 var number;
+var oldPlayer;
+var oldBoxes;
+var oldMass;
 function rot13(s) {
 return s.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
 }
@@ -13,7 +16,7 @@ function cleanUp(text){
         }
     }
     return text;
-    
+
 }
 
 app.get('/online', function(req, res) {
@@ -140,6 +143,8 @@ io.sockets.on('connection', function(socket) {
 
     var player = Player(socket.id);
     PLAYER_LIST[socket.id] = player;
+    sendMass(player.name);
+    sendROD(player.name);
     socket.on('disconnect', function() {
         try {
             delete SOCKET_LIST[socket.id];
@@ -421,6 +426,38 @@ setInterval(function() {
         }
     }
 }, 1000);
+function sendROD(player) {
+  var pack = [];
+  for (var i in BOXES) {
+      var box = BOXES[i];
+      pack.push({
+          x: box.x,
+          y: box.y,
+          owner: box.Owner,
+          type: box.Type,
+          id: box.UUID,
+      });
+  }
+  for (var i in SOCKET_LIST) {
+      var socket = SOCKET_LIST[findID(player)];
+      socket.emit('Boxes', pack);
+  }
+}
+function sendMass(player) {
+  var pack = [];
+  for (var i in MASSYSQUARES) {
+      var box = MASSYSQUARES[i];
+      pack.push({
+          x: box.x,
+          y: box.y,
+      });
+  }
+
+  for (var i in SOCKET_LIST) {
+      var socket = SOCKET_LIST[findID(player)];
+      socket.emit('MASS', pack);
+  }
+}
 setInterval(function() {
     runCollisionText();
     var pack = [];
@@ -431,11 +468,16 @@ setInterval(function() {
             y: box.y,
         });
     }
+
+    if (JSON.stringify(oldMass)!=JSON.stringify(pack)) {
+      oldMass = pack;
+      console.log(JSON.stringify(oldMass));
     for (var i in SOCKET_LIST) {
         var socket = SOCKET_LIST[i];
 
         socket.emit('MASS', pack);
     }
+  }
     var pack = [];
     for (var i in BOXES) {
         var box = BOXES[i];
@@ -447,9 +489,13 @@ setInterval(function() {
             id: box.UUID,
         });
     }
+    if (JSON.stringify(oldBoxes)!=JSON.stringify(pack)) {
+      oldBoxes=pack;
+
     for (var i in SOCKET_LIST) {
         var socket = SOCKET_LIST[i];
         socket.emit('Boxes', pack);
+    }
     }
     var pack = [];
     for (var i in PLAYER_LIST) {
@@ -466,9 +512,12 @@ setInterval(function() {
             points: player.points
         });
     }
+    if (oldPlayer!=pack) {
+      oldPlayer=pack;
     for (var i in SOCKET_LIST) {
         var socket = SOCKET_LIST[i];
         socket.emit('newPositions', pack);
+    }
     }
 
 
