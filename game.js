@@ -66,10 +66,8 @@ var Player = function(id) {
         id: id,
         w: 30,
         h: 30,
-        pressingRight: false,
-        pressingLeft: false,
-        pressingUp: false,
-        pressingDown: false,
+        Mousex: 0,
+        Mousey: 0,
         maxSpd: 10,
         name: "",
         inv: 1,
@@ -78,33 +76,43 @@ var Player = function(id) {
         points: 30,
     }
     self.updatePosition = function() {
-        if (self.pressingRight) {
-            if (self.x <= gamesize - (self.w / 2)) {
-                self.x += self.maxSpd;
-                self.xoff += self.maxSpd;
-            }
+      if (self.Mousex <= 10){
+        self.Mousex=self.Mousex;
+      }else{
+        self.Mousex=10;
+      }
+      if (self.Mousey <= 10){
+        self.Mousey=self.Mousey;
+      }else{
+        self.Mousey=10;
+      }
+      if (self.Mousex >= -10){
+        self.Mousex=self.Mousex;
+      }else{
+        self.Mousex= -10;
+      }
+      if (self.Mousey >= -10){
+        self.Mousey=self.Mousey;
+      }else{
+        self.Mousey= -10;
+      }
+      if (self.Mousex <= 10 && self.Mousey <= 10){
+            if (self.x <= gamesize && self.x >= 10) {
+                self.x += self.Mousex;
+                self.xoff += self.Mousex;
+                console.log(self.Mousex);
+            }else{
 
-        }
-        if (self.pressingLeft) {
-            if (self.x >= 10) {
-                self.x -= self.maxSpd;
-                self.xoff -= self.maxSpd;
             }
-
-        }
-        if (self.pressingUp) {
-            if (self.y >= 10) {
-                self.y -= self.maxSpd;
-                self.yoff -= self.maxSpd;
+            if (self.y >= 10 && self.y <= gamesize) {
+              self.y += self.Mousey;
+              self.yoff += self.Mousey;
+              console.log(self.Mousey);
+            }else{
+              self.y +=
             }
-        }
-        if (self.pressingDown) {
-            if (self.y <= gamesize - (self.h / 2)) {
-                self.y += self.maxSpd;
-                self.yoff += self.maxSpd;
-            }
-        }
-    }
+          }
+  }
     return self;
 }
 var MS = function(id) {
@@ -183,15 +191,9 @@ io.sockets.on('connection', function(socket) {
         }
     });
 
-    socket.on('keyPress', function(data) {
-        if (data.inputId === 'left')
-            player.pressingLeft = data.state;
-        else if (data.inputId === 'right')
-            player.pressingRight = data.state;
-        else if (data.inputId === 'up')
-            player.pressingUp = data.state;
-        else if (data.inputId === 'down')
-            player.pressingDown = data.state;
+    socket.on('mousePos',function(data){
+        player.Mousex = data[0];
+        player.Mousey = data[1];
     });
     socket.on('adminCommand', function(command) {
         if (command.password == adminpass) {
@@ -471,7 +473,6 @@ setInterval(function() {
 
     if (JSON.stringify(oldMass)!=JSON.stringify(pack)) {
       oldMass = pack;
-      console.log(JSON.stringify(oldMass));
     for (var i in SOCKET_LIST) {
         var socket = SOCKET_LIST[i];
 
