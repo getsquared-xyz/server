@@ -1,5 +1,5 @@
 <center>
-<canvas id="canvas" style="border:1px solid #000000;"></canvas>
+<canvas id="canvas" style="border:1px solid #000000;" onmousemove="updateMouse(event);"></canvas>
 </center>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
@@ -27,6 +27,16 @@ Array.prototype.sortBy = function(p) {
     return b;
   })(window.location.search.substr(1).split('&'));
     var socket = io();
+    function updateMouse(event){
+    mX = Math.round(event.clientX);
+    mY = Math.round(event.clientY);
+    myX2 = mX-window.innerWidth/2;
+    myY2 = mY-window.innerHeight/2;
+    myX = myX2+10;
+    myY = myY2+10;
+    var ms = [myX,myY];
+    socket.emit('mousePos',ms)
+    }
     var imgs={};
     imgs.YourDrop2=new Image();
     imgs.YourDrop2.src = "./client/SquaredGraphics/YourDrops2.png";
