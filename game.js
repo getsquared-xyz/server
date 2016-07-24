@@ -102,14 +102,22 @@ var Player = function(id) {
                 self.xoff += self.Mousex;
                 console.log(self.Mousex);
             }else{
-
+              if (self.x <= 10 && self.x > -20 && self.Mousex > 0 || self.x >= gamesize-10 && self.x < gamesize+10 && self.Mousex < 0 ) {
+                self.x += self.Mousex;
+                self.xoff += self.Mousex;
+                console.log(self.Mousex);
+              }
             }
             if (self.y >= 10 && self.y <= gamesize) {
               self.y += self.Mousey;
               self.yoff += self.Mousey;
               console.log(self.Mousey);
             }else{
-              self.y +=
+              if (self.y <= 10 && self.y > -20 && self.Mousey > 0 || self.y >= gamesize-10 && self.y < gamesize+10 && self.Mousey < 0 ) {
+                self.y += self.Mousey;
+                self.yoff += self.Mousey;
+                console.log(self.Mousey);
+              }
             }
           }
   }
