@@ -46,7 +46,7 @@ var BOXES = {};
 var MASSYSQUARES = {};
 var MASSYSQUARESCAP = 100;
 var gamesize = 4300;
-var adminpass = "*Password*"
+var adminpass = "Potatoz"
 Object.size = function(obj) {
     var size = 0,
         key;
@@ -74,6 +74,8 @@ var Player = function(id) {
         box1Count: 0,
         box2Count: 0,
         points: 30,
+        Incolor: 000000,
+        Outcolor: 000000,
     }
     self.updatePosition = function() {
       if (self.Mousex <= 10){
@@ -178,6 +180,14 @@ io.sockets.on('connection', function(socket) {
             PLAYER_LIST[socket.id].box1Count++;
         }
     });
+    socket.on("colors", function(colors) {
+      for (var i in PLAYER_LIST) {
+          var player = PLAYER_LIST[i];
+          player.Incolor=colors.incolor;
+          player.Outcolor=colors.outcolor;
+        }
+    });
+
     socket.on("name", function(name) {
         used = false;
         if (name !== "" && name.length < 21 && isValid(name)) {
@@ -518,7 +528,10 @@ setInterval(function() {
             number: player.number,
             name: player.name,
             id: player.id,
-            points: player.points
+            points: player.points,
+            Incolor: player.Incolor,
+            Outcolor: player.Outcolor,
+
         });
     }
     if (oldPlayer!=pack) {
