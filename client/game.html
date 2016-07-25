@@ -6,6 +6,7 @@
 var me={};
 var mp;
 var version = "0.9";
+var color;
 
 var Mass;
 Array.prototype.sortBy = function(p) {
@@ -27,6 +28,8 @@ Array.prototype.sortBy = function(p) {
     return b;
   })(window.location.search.substr(1).split('&'));
     var socket = io();
+    var colors=[];
+    console.log(qs);
     function updateMouse(event){
     mX = Math.round(event.clientX);
     mY = Math.round(event.clientY);
@@ -79,6 +82,14 @@ function drawStuff(winx2,winy2,windx2,windy2) {
   var windx = windx2;
   var windy = windy2;
     socket.on('newPositions',function(data){
+      var color=qs["Inside"];
+      var color2=qs["Outside"];
+      colors.push({
+      incolor: color,
+      outcolor: color2,
+      });
+      socket.emit("colors", colors);
+      console.log(color + " " + color);
       info = data;
       for(var i = 0 ; i < data.length; i++) {
         if (info[i].name==name) {
@@ -171,11 +182,12 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
             ctx.fillText("Points: " + mp,0,120);
             ctx.font = '20px Arial';
             ctx.fillText("You",locx-40,locy-40);
-            roundRect(locx-40,locy-40,30,30,7,"round","grey","black");
+            roundRect(locx-40,locy-40,30,30,7,"round","#" + color,"#" + color2);
             roundRect(window.innerWidth-250+info[i].x/20,window.innerHeight-250+info[i].y/20,5,5,.5,"round","green","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20);
-            roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","red","black");
+            console.log(info[i]);
+            roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","#" + info[i].Incolor,"#" + info[i].Outcolor);
             roundRect(window.innerWidth-250+info[i].x/20,window.innerHeight-250+info[i].y/20,5,5,.5,"round","red","black");
             }
         }
@@ -196,6 +208,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
 
 
   });
+
    socket.on('Boxes',function(data){
      console.log("New Box")
      Boxes = data;
