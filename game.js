@@ -102,23 +102,23 @@ var Player = function(id) {
             if (self.x <= gamesize && self.x >= 10) {
                 self.x += self.Mousex;
                 self.xoff += self.Mousex;
-                console.log(self.Mousex);
+
             }else{
               if (self.x <= 10 && self.x > -20 && self.Mousex > 0 || self.x >= gamesize-10 && self.x < gamesize+10 && self.Mousex < 0 ) {
                 self.x += self.Mousex;
                 self.xoff += self.Mousex;
-                console.log(self.Mousex);
+
               }
             }
             if (self.y >= 10 && self.y <= gamesize) {
               self.y += self.Mousey;
               self.yoff += self.Mousey;
-              console.log(self.Mousey);
+
             }else{
               if (self.y <= 10 && self.y > -20 && self.Mousey > 0 || self.y >= gamesize-10 && self.y < gamesize+10 && self.Mousey < 0 ) {
                 self.y += self.Mousey;
                 self.yoff += self.Mousey;
-                console.log(self.Mousey);
+
               }
             }
           }
@@ -181,9 +181,10 @@ io.sockets.on('connection', function(socket) {
         }
     });
     socket.on("colors", function(colors) {
+      var colors=colors
           var player = PLAYER_LIST[socket.id];
-          player.Incolor=colors.incolor;
-          player.Outcolor=colors.outcolor;
+          player.Incolor=colors[0].incolor;
+          player.Outcolor=colors[0].outcolor;
     });
 
     socket.on("name", function(name) {
@@ -518,6 +519,7 @@ setInterval(function() {
     for (var i in PLAYER_LIST) {
         var player = PLAYER_LIST[i];
         player.updatePosition();
+
         pack.push({
             xoff: player.xoff,
             yoff: player.yoff,
@@ -532,7 +534,7 @@ setInterval(function() {
 
         });
     }
-    if (oldPlayer!=pack) {
+    if (true) {
       oldPlayer=pack;
     for (var i in SOCKET_LIST) {
         var socket = SOCKET_LIST[i];
