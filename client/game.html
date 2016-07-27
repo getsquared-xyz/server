@@ -114,12 +114,13 @@ function drawStuff(winx2,winy2,windx2,windy2) {
         ctx.fillRect(0,i-me.yoff+windy,gamesize2,1);
       }
         ctx.fillStyle="black";
-        ctx.fillRect(0,0-me.yoff+windy-25,gamesize2,5);
+        ctx.fillRect(0,0-me.yoff+windy-25,gamesize2,5);//Start Borders
         ctx.fillRect(0-me.xoff+windx-25,0,5,gamesize);
         ctx.fillRect(gamesize-me.xoff+windx,0,5,gamesize);
-        ctx.fillRect(0,gamesize-me.yoff+windy,gamesize2,5);
+        ctx.fillRect(0,gamesize-me.yoff+windy,gamesize2,5);//End Border
 roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey","black");
       ctx.strokeStyle="black";
+      //Draw Boxs
       for(var i = 0 ; i < Boxes.length; i++) {
         if(Boxes[i].owner == name) {
           if (Boxes[i].type=="1") {
@@ -158,6 +159,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
         }
 
       }
+      //draw scoreboard
       ctx.fillStyle="grey";
       ctx.font = '20px Arial';
       var scoreboard = info.sortBy('points');
