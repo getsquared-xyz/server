@@ -47,8 +47,16 @@ Array.prototype.sortBy = function(p) {
     var canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d');
     ctx.font = '30px Arial';
+        var me={};
     (function() {
-      var me={};
+      var color=qs["Inside"];
+      var color2=qs["Outside"];
+      colors.push({
+      incolor: color,
+      outcolor: color2,
+      });
+      socket.emit("colors", colors);
+
       var info;
       var Boxs;
       var name="";
@@ -84,11 +92,6 @@ function drawStuff(winx2,winy2,windx2,windy2) {
     socket.on('newPositions',function(data){
       var color=qs["Inside"];
       var color2=qs["Outside"];
-      colors.push({
-      incolor: color,
-      outcolor: color2,
-      });
-      socket.emit("colors", colors);
       console.log(color + " " + color);
       info = data;
       for(var i = 0 ; i < data.length; i++) {
@@ -176,6 +179,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
 
       }
         for(var i = 0 ; i < data.length; i++) {
+
           ctx.fillStyle="black";
           if(info[i].name == name) {
             locx=window.innerWidth/2
@@ -188,7 +192,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
             roundRect(window.innerWidth-250+info[i].x/20,window.innerHeight-250+info[i].y/20,5,5,.5,"round","green","black");
           } else {
             ctx.fillText(info[i].name,info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20);
-            console.log(info[i]);
+
             roundRect(info[i].x-me.xoff+windx-20,info[i].y-me.yoff+windy-20,30,30,7,"round","#" + info[i].Incolor,"#" + info[i].Outcolor);
             roundRect(window.innerWidth-250+info[i].x/20,window.innerHeight-250+info[i].y/20,5,5,.5,"round","red","black");
             }
@@ -212,12 +216,12 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
   });
 
    socket.on('Boxes',function(data){
-     console.log("New Box")
+
      Boxes = data;
 
    });
    socket.on('MASS',function(data){
-     console.log("New Mass")
+
      Mass = data;
 
 
