@@ -181,11 +181,9 @@ io.sockets.on('connection', function(socket) {
         }
     });
     socket.on("colors", function(colors) {
-      for (var i in PLAYER_LIST) {
-          var player = PLAYER_LIST[i];
+          var player = PLAYER_LIST[socket.id];
           player.Incolor=colors.incolor;
           player.Outcolor=colors.outcolor;
-        }
     });
 
     socket.on("name", function(name) {
