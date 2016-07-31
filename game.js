@@ -99,7 +99,7 @@ var Player = function(id) {
         self.Mousey= -10;
       }
       if (self.Mousex <= 10 && self.Mousey <= 10){
-            if (self.x <= gamesize && self.x >= 10) {
+            if (self.x < gamesize && self.x >= 10) {
                 self.x += self.Mousex;
                 self.xoff += self.Mousex;
 
@@ -110,7 +110,7 @@ var Player = function(id) {
 
               }
             }
-            if (self.y >= 10 && self.y <= gamesize) {
+            if (self.y >= 10 && self.y < gamesize) {
               self.y += self.Mousey;
               self.yoff += self.Mousey;
 
@@ -362,9 +362,6 @@ function runCollisionText() {
         b = [];
         p = 65;
         try {
-
-
-
             for (var i in BOXES) {
                 if (BOXES[i].UUID == player.id + 1) {
 
