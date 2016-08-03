@@ -207,7 +207,7 @@ roundRect(window.innerWidth-250,window.innerHeight-250,235,235,5,"round","grey",
        eval(data);
    });
    socket.on('dead', function (data) {
-      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server+'&killer='+data.killer+'&points='+data.points+'&Outpoints='++'&Incolor'+)
+      location.replace('http://getsquared.xyz/dead.html?points=-9&name='+data.name+'&server='+data.server+'&killer='+data.killer+'&points='+data.points+'&Outpoints='+color2+'&Incolor'+color)
   });
   socket.on('myname',function(data){
     name=data
