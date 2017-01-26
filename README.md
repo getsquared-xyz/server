@@ -16,3 +16,4 @@ The official getsquared.xyz server stuff repo
 - [ ] One page design with server transfer multiple rooms and *moar*
 - [x] Add Ads
 - [ ] Release *On Hold*
+- [ ] Add better mouse control
